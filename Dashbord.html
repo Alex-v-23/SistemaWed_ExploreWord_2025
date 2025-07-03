@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turismo El Salvador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/Dasbord.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-blue-800 text-white w-64 flex-shrink-0">
+            <div class="p-4 flex items-center">
+                <i class="fas fa-umbrella-beach text-2xl mr-3"></i>
+                <span class="logo-text font-bold text-xl">Turismo SV</span>
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center active-nav" data-section="dashboard">
+                    <i class="fas fa-chart-pie mr-3"></i>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="viajes">
+                    <i class="fas fa-suitcase-rolling mr-3"></i>
+                    <span class="nav-text">Viajes</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="empleados">
+                    <i class="fas fa-users mr-3"></i>
+                    <span class="nav-text">Empleados</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="destinos">
+                    <i class="fas fa-map-marked-alt mr-3"></i>
+                    <span class="nav-text">Destinos</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="facturas">
+                    <i class="fas fa-file-invoice-dollar mr-3"></i>
+                    <span class="nav-text">Facturas</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="pagos">
+                    <i class="fas fa-money-bill-wave mr-3"></i>
+                    <span class="nav-text">Pagos</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="reservaciones">
+                    <i class="fas fa-calendar-check mr-3"></i>
+                    <span class="nav-text">Reservaciones</span>
+                </div>
+                <div class="px-4 py-3 hover:bg-blue-700 cursor-pointer flex items-center" data-section="servicios">
+                    <i class="fas fa-concierge-bell mr-3"></i>
+                    <span class="nav-text">Servicios</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <h1 class="text-2xl font-semibold text-gray-800">Dashboard</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-gray-600 cursor-pointer"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile" class="h-8 w-8 rounded-full mr-2">
+                        <span class="text-gray-700">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main class="p-6">
+                <div class="section-content" id="dashboard-section">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    <i class="fas fa-suitcase-rolling text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Viajes activos</p>
+                                    <h3 class="text-2xl font-bold">24 <span class="text-sm font-normal text-green-600">(+12% vs mes pasado)</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                                    <i class="fas fa-dollar-sign text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Ingresos mensuales</p>
+                                    <h3 class="text-2xl font-bold">$12,450 <span class="text-sm font-normal text-red-600">(-5% vs mes pasado)</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                                    <i class="fas fa-users text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Clientes nuevos</p>
+                                    <h3 class="text-2xl font-bold">18 <span class="text-sm font-normal text-green-600">(+20% vs mes pasado)</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                                    <i class="fas fa-calendar-check text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Reservaciones</p>
+                                    <h3 class="text-2xl font-bold">32 <span class="text-sm font-normal text-green-600">(+8% vs mes pasado)</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-lg font-semibold mb-4">Viajes por destino</h3>
+                            <div class="chart-container">
+                                <canvas id="destinationsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-lg font-semibold mb-4">Ingresos mensuales</h3>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destinos destacados -->
+                    <div class="bg-white rounded-lg shadow p-6 mb-8">
+                        <h3 class="text-lg font-semibold mb-4">Destinos Turísticos de El Salvador</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border rounded-lg p-4">
+                                <h4 class="font-medium text-blue-600 mb-2">Ruta de las Flores</h4>
+                                <p class="text-gray-600 text-sm mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Departamento: Sonsonate</p>
+                                <p class="text-gray-600 text-sm mb-2"><i class="fas fa-info-circle mr-2"></i>Pueblos coloniales: Juayúa, Apaneca, Ataco</p>
+                                <p class="text-gray-600 text-sm mb-2"><i class="fas fa-star mr-2"></i>Atractivos: Cafetales, gastronomía, festivales</p>
+                                <p class="text-gray-600 text-sm">Es un recorrido pintoresco por pueblos coloniales famosos por sus cafetales y festivales gastronómicos los fines de semana. La ruta ofrece paisajes montañosos, clima fresco y artesanías locales.</p>
+                            </div>
+                            <div class="border rounded-lg p-4">
+                                <h4 class="font-medium text-blue-600 mb-2">Playa El Tunco</h4>
+                                <p class="text-gray-600 text-sm">La playa más famosa para surfistas, con ambiente bohemio, hoteles boutique, restaurantes y espectaculares atardeceres sobre el Océano Pacífico.</p>
+                            </div>
+                            <div class="border rounded-lg p-4">
+                                <h4 class="font-medium text-blue-600 mb-2">Lago de Coatepeque</h4>
+                                <p class="text-gray-600 text-sm">Hermoso lago de origen volcánico con aguas cristalinas que cambian de color, ideal para deportes acuáticos, paseos en bote y relajarse en sus hoteles con vista al lago.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Más información -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold mb-4">¿Por qué visitar El Salvador?</h3>
+                        <div class="space-y-4">
+                            <p class="text-gray-600">El Salvador, conocido como "El Pulgarcito de América", ofrece una gran diversidad en un territorio pequeño: playas paradisíacas, volcanes imponentes, pueblos coloniales y una rica cultura.</p>
+                            <p class="text-gray-600">Nuestros tours incluyen:</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li>Guías turísticos certificados</li>
+                                <li>Transporte seguro y cómodo</li>
+                                <li>Alimentación típica incluida</li>
+                                <li>Seguro médico básico</li>
+                                <li>Acceso a los mejores miradores y atracciones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Viajes Section -->
+                <div class="section-content hidden" id="viajes-section">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-800">Viajes Turísticos</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destino</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">VT001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Tour Ruta de las Flores</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Apaneca</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">15/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$75.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">VT002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Playa El Tunco</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">La Libertad</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">22/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$60.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">VT003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Lago de Coatepeque</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Santa Ana</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">29/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$85.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Próximo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">VT004</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Volcán Ilamatepec</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Santa Ana</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">05/08/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$90.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Próximo</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 flex justify-end">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Nuevo Viaje
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empleados Section -->
+                <div class="section-content hidden" id="empleados-section">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-800">Empleados</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Puesto</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">EMP001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Carlos Martínez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Guía turístico</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">7123-4567</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">carlos@tursv.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">EMP002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Ana Rodríguez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Coordinadora</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">7890-1234</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">ana@tursv.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">EMP003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Luis Hernández</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Conductor</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">7654-3210</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">luis@tursv.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 flex justify-end">
+                            <button  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                                <i class="fas fa-plus mr-2"><link rel="stylesheet">
+                                </i> Nuevo Empleado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destinos Section -->
+                <div class="section-content hidden" id="destinos-section">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Destination Card 1 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/playa-el-tunco-1.jpg" alt="El Tunco" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Playa El Tunco</h3>
+                                <p class="text-gray-600 mb-4">Famosa playa para surfear con ambiente bohemio y hermosos atardeceres.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">$60.00</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Destination Card 2 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/ruta-de-las-flores-1.jpg" alt="Ruta de las Flores" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Ruta de las Flores</h3>
+                                <p class="text-gray-600 mb-4">Pintoresca ruta con pueblos coloridos, cafetales y artesanías.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">$75.00</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Destination Card 3 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/lago-de-coatepeque-1.jpg" alt="Lago de Coatepeque" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Lago de Coatepeque</h3>
+                                <p class="text-gray-600 mb-4">Hermoso lago de origen volcánico con aguas cristalinas.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">$85.00</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Agregar Destino
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Facturas Section -->
+                <div class="section-content hidden" id="facturas-section">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-800">Facturas</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">N° Factura</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">María González</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">10/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$150.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Pagada</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-green-600 hover:text-green-800"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Juan Pérez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">12/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$225.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Pagada</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-green-600 hover:text-green-800"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Roberto Sánchez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">15/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$180.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pendiente</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-green-600 hover:text-green-800"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 flex justify-end">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Nueva Factura
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagos Section -->
+                <div class="section-content hidden" id="pagos-section">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-800">Pagos</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Pago</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Factura</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Método</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">PAG-001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">María González</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">10/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$150.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Tarjeta</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">PAG-002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Juan Pérez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">12/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$225.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Efectivo</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">PAG-003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">FAC-2023-004</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Laura Ramírez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">14/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$120.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Transferencia</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 flex justify-end">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Registrar Pago
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reservaciones Section -->
+                <div class="section-content hidden" id="reservaciones-section">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-800">Reservaciones</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Viaje</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Personas</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">RES-001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">María González</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Tour Ruta de las Flores</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">15/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">2</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Confirmada</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">RES-002</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Juan Pérez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Playa El Tunco</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">22/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Confirmada</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">RES-003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Roberto Sánchez</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Lago de Coatepeque</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">29/07/2023</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">3</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pendiente</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 flex justify-end">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Nueva Reservación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servicios Section -->
+                <div class="section-content hidden" id="servicios-section">
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold mb-4">Transportes</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Transport Card 1 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Autobús" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Autobús Turístico</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-users mr-2"></i> Capacidad: 40 personas</p>
+                                <p class="text-gray-600 mb-4"><i class="fas fa-car mr-2"></i> Placa: P123456</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-green-600 font-medium">Disponible</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Transport Card 2 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Minibús" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Minibús</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-users mr-2"></i> Capacidad: 15 personas</p>
+                                <p class="text-gray-600 mb-4"><i class="fas fa-car mr-2"></i> Placa: M654321</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-green-600 font-medium">Disponible</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Transport Card 3 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Van" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Van Ejecutiva</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-users mr-2"></i> Capacidad: 8 personas</p>
+                                <p class="text-gray-600 mb-4"><i class="fas fa-car mr-2"></i> Placa: V987654</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-red-600 font-medium">En mantenimiento</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Agregar Transporte
+                        </button>
+                    </div>
+                </div>
+
+                    <div class="mt-8">
+                        <h2 class="text-xl font-semibold mb-4">Servicios en Eventos</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Event Card 1 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/festival-apaneca-1.jpg" alt="Festival Apaneca" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Festival del Café</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Apaneca</p>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-calendar-day mr-2"></i> 25-27 Agosto 2023</p>
+                                <p class="text-gray-600 mb-4">Festival anual del café con degustaciones y actividades culturales.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">20 cupos</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Event Card 2 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/surf-city-1.jpg" alt="Surf City" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Torneo de Surf</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> El Tunco</p>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-calendar-day mr-2"></i> 15-17 Septiembre 2023</p>
+                                <p class="text-gray-600 mb-4">Competencia internacional de surf con participantes de todo el mundo.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">35 cupos</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Event Card 3 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <img src="https://elsalvador.travel/wp-content/uploads/2020/12/fiestas-aguilares-1.jpg" alt="Fiestas Aguilares" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Fiestas Patronales</h3>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Santa Ana</p>
+                                <p class="text-gray-600 mb-2"><i class="fas fa-calendar-day mr-2"></i> 20-26 Julio 2023</p>
+                                <p class="text-gray-600 mb-4">Tradicionales fiestas patronales con ferias, música y gastronomía.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-medium">15 cupos</span>
+                                    <button class="text-blue-600 hover:text-blue-800">Ver detalles</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Agregar Evento
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Navigation between sections
+        document.querySelectorAll('nav div[data-section]').forEach(item => {
+            item.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                
+                // Update active nav item
+                document.querySelectorAll('nav div').forEach(navItem => {
+                    navItem.classList.remove('bg-blue-700', 'active-nav');
+                });
+                this.classList.add('bg-blue-700', 'active-nav');
+                
+                // Update header title
+                const headerTitle = document.querySelector('header h1');
+                headerTitle.textContent = this.querySelector('.nav-text').textContent;
+                
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Show selected section
+                document.getElementById(`${section}-section`).classList.remove('hidden');
+            });
+        });
+        // Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Destinations Chart
+            const destinationsCtx = document.getElementById('destinationsChart').getContext('2d');
+            const destinationsChart = new Chart(destinationsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Ruta de las Flores', 'El Tunco', 'Coatepeque', 'Volcán Ilamatepec', 'Suchitoto'],
+                    datasets: [{
+                        data: [15, 12, 8, 5, 7],
+                        backgroundColor: [
+                            '#3B82F6',
+                            '#10B981',
+                            '#F59E0B',
+                            '#6366F1',
+                            '#EC4899'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Ingresos ($)',
+                        data: [8500, 9200, 10500, 11200, 9800, 12450, 11800],
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: '#3B82F6',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</html>
