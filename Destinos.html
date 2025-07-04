@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Integrantes</title>
+    <link rel="stylesheet" href="CSS/Destinos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="contenedor-app">
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="titulo-menu">
+                <img src="img/Logo.png" class="TamañoImagen">
+                <span class="material-symbols-outlined">Explore world</span>
+            </div>
+
+            <a href="Admin.html">
+                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
+                <span class="texto-menu">Inicio</span>
+            </a>
+            <a href="Viajes.html">
+                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
+                <span class="texto-menu">Viajes</span>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
+                <span class="texto-menu">Empleados</span>
+            </a>
+            <a href="Destinos.html">
+                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
+                <span class="texto-menu">Destinos</span>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
+                <span class="texto-menu">Factura</span>
+            </a>
+            <a href="Reservaciones.html">
+                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
+                <span class="texto-menu">Reservaciones</span>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
+                <span class="texto-menu">Servicios</span>
+            </a>
+        </div>
+
+        <div id="contenido-principal">
+            <header class="barra-superior">
+                <h1>Destinos</h1>
+            </header>
+
+            <main class="container">
+                <div class="tabla-scroll">
+                    <h3>Destinos Disponibles</h3>
+                    <table id="tabla">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Lugar</th>
+                                <th>Tipo</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos se llenarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para agregar -->
+    <dialog id="mdAgregar">
+        <article>
+            <header>
+                <a href="#" class="close" id="btnCerrar">&times;</a>
+                <h3>Ingresar Destino</h3>
+            </header>
+            <form id="frmAgregar">
+                <div class="form-group">
+                    <label for="txtNombre">Nombre:</label>
+                    <input type="text" id="txtNombre" placeholder="Nombre Destino" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtLugar">Lugar:</label>
+                    <input type="text" id="txtLugar" placeholder="Lugar" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtTipo">Tipo:</label>
+                    <input type="text" id="txtTipo" placeholder="Tipo" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtDescripcion">Descripcion:</label>
+                    <input type="text" id="txtDescripcion" placeholder="Descripcion">
+                </div>
+                <button type="submit" class="contrast">Guardar</button>
+            </form>
+        </article>
+    </dialog>
+
+    <!-- Modal para editar -->
+    <dialog id="mdEditar">
+        <article>
+            <header>
+                <a href="#" class="close" id="btnCerrarEditar">&times;</a>
+                <h3>Actualizar Información</h3>
+            </header>
+            <form id="frmEditar">
+                <input type="hidden" id="txtIdEditar">
+                <div class="form-group">
+                    <label for="txtNombreEditar">Nombre:</label>
+                    <input type="text" id="txtNombreEditar" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtLugarEditar">Lugar:</label>
+                    <input type="text" id="txtLugarEditar" placeholder="Lugar">
+                </div>
+                <div class="form-group">
+                    <label for="txtTipoEditar">Tipo:</label>
+                    <input type="text" id="dateTipoEditar" placeholder="Tipo">
+                </div>
+                <div class="form-group">
+                    <label for="txtDescripcionEditar">Descripcion:</label>
+                    <input type="text" id="txtDescripcionEditar" placeholder="Descripcion">
+                </div>
+                <button type="submit" class="contrast">Actualizar</button>
+            </form>
+        </article>
+    </dialog>
+
+    <!-- Botón flotante -->
+    <button id="BtnAgregar" class="add-button">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <script src="js/Destinos.js"></script>
+</body>
+
+</html>

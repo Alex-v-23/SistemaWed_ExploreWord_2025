@@ -1,5 +1,5 @@
 // URL del EndPoint de los integrantes - API
-const API_URL = "https://retoolapi.dev/5nimly/data";
+const API_URL = "https://retoolapi.dev/Iyex1b/data";
 
 // Elementos del DOM
 const modal = document.getElementById("mdAgregar");
@@ -9,16 +9,16 @@ const btnCerrar = document.getElementById("btnCerrar");
 const btnCerrarEditar = document.getElementById("btnCerrarEditar");
 
 // Obtener integrantes al cargar la página
-document.addEventListener('DOMContentLoaded', ObtenerReservaciones);
+document.addEventListener('DOMContentLoaded', ObtenerDestinos);
 
 // Función para obtener integrantes
-async function ObtenerReservaciones() {
+async function ObtenerDestinos() {
     try {
         const respuesta = await fetch(API_URL);
         const data = await respuesta.json();
         MostrarDatos(data);
     } catch (error) {
-        console.error("Error al obtener las reservaciones:", error);
+        console.error("Error al obtener los destinos:", error);
         alert("Error al cargar los datos. Por favor recarga la página.");
     }
 }
@@ -28,20 +28,19 @@ function MostrarDatos(datos) {
     const tabla = document.querySelector("#tabla tbody");
     tabla.innerHTML = "";
 
-    datos.forEach(Reservacion => {
+    datos.forEach(Destino => {
         tabla.innerHTML += `
         <tr>
-            <td>${Reservacion.id}</td>
-            <td>${Reservacion.cliente}</td>
-            <td>${Reservacion.viaje}</td>
-            <td>${Reservacion.fecha}</td>
-            <td>${Reservacion.personas}</td>
-            <td>${Reservacion.estado}</td>
+            <td>${Destino.id}</td>
+            <td>${Destino.Nombre}</td>
+            <td>${Destino.Lugar}</td>
+            <td>${Destino.Tipo}</td>
+            <td>${Destino.Descripcion}</td>
             <td>
-                    <button class="button button-edit" onclick="AbrirModalEditar('${Reservacion.id}', '${Reservacion.cliente}', '${Reservacion.viaje}', '${Reservacion.fecha}', '${Reservacion.personas}', '${Reservacion.estado}')">
+                    <button class="button button-edit" onclick="AbrirModalEditar('${Destino.id}', '${Destino.Nombre}', '${Destino.Lugar}', '${Destino.Tipo}', '${Destino.Descripcion}')">
                         <i class="fas fa-edit"></i> Editar
                     </button>
-                    <button class="button button-delete" onclick="EliminarViaje(${Reservacion.id})">
+                    <button class="button button-delete" onclick="EliminarDestino(${Destino.id})">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </button>
                 </div>
@@ -70,13 +69,12 @@ btnCerrarEditar.addEventListener("click", (e) => {
 
 
 // Abrir modal de edición
-function AbrirModalEditar(id, cliente, viaje, fecha, personas, estado) {
+function AbrirModalEditar(id, Nombre, Lugar, Tipo, Descripcion) {
     document.getElementById("txtIdEditar").value = id;
-    document.getElementById("txtClienteEditar").value = cliente;
-    document.getElementById("txtViajeEditar").value = viaje;
-    document.getElementById("dateFechaEditar").value = fecha;
-    document.getElementById("txtPersonasEditar").value = personas;
-    document.getElementById("txtEstadoEditar").value = estado;
+    document.getElementById("txtNombreEditar").value = Nombre;
+    document.getElementById("txtLugarEditar").value = Lugar;
+    document.getElementById("txtTipoEditar").value = Tipo;
+    document.getElementById("txtDescripcionEditar").value = Descripcion;
     modalEditar.showModal();
 }
 
@@ -85,16 +83,16 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     e.preventDefault(); // e Representa a submit. Evita que el formulario se envie solo.
 
     //Capturar los valores del formulario
-    const cliente = document.getElementById("txtCliente").value.trim();
-    const viaje = document.getElementById("txtViaje").value.trim();
-    const fecha = document.getElementById("dateFecha").value.trim();
-    const personas = document.getElementById("txtPersonas").value.trim();
-    const estado = document.getElementById("txtEstado").value.trim();
+    const Nombre = document.getElementById("txtNombre").value.trim();
+    const Lugar = document.getElementById("txtLugar").value.trim();
+    const Tipo = document.getElementById("txtTipo").value.trim();
+    const Descripcion = document.getElementById("txtDescripcion").value.trim();
+
 
 
     //Validadcion basica
 
-    if(!cliente || !viaje || !fecha || !personas || !estado){
+    if(!Nombre || !Lugar || !Tipo || !Descripcion){
         alert("Ingresar los valores correctamente");
         return; //Para evitar que el codigo se siga ejecutando
     }
@@ -103,7 +101,7 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     const respuesta = await fetch(API_URL, {
         method: "POST", //Tipo de solicitud
         headers: {'Content-Type':'application/json'}, //Tipo de datos enviados
-        body: JSON.stringify({cliente,viaje,fecha,personas,estado})//Datos enviados
+        body: JSON.stringify({Nombre,Lugar,Tipo,Descripcion})//Datos enviados
     });
 
     //Verificacion si la API rsponde que los datos fueron enviados correctamente
@@ -117,7 +115,7 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
         modal.close();
 
         //Recargar la tabla
-        ObtenerReservaciones();
+        ObtenerDestinos();
     }else{
         //En caso de que la API no devuelva un codigo diferente a 200-299
         alert("El registro no pudo ser agregado");
@@ -130,13 +128,12 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
     e.preventDefault();
 
     const id = document.getElementById("txtIdEditar").value;
-    const cliente = document.getElementById("txtClienteEditar").value.trim();
-    const viaje = document.getElementById("txtViajeEditar").value.trim();
-    const fecha = document.getElementById("dateFechaEditar").value.trim();
-    const personas = document.getElementById("txtPersonasEditar").value.trim();
-    const estado = document.getElementById("txtEstadoEditar").value.trim();
+    const Nombre = document.getElementById("txtNombreEditar").value.trim();
+    const Lugar = document.getElementById("txtLugarEditar").value.trim();
+    const Tipo = document.getElementById("txtTipoEditar").value.trim();
+    const Descripcion = document.getElementById("txtDescripcionEditar").value.trim();
 
-    if (!id || !cliente || !viaje || !fecha || !personas || !estado) {
+    if (!id || !Nombre || !Lugar || !Tipo || !Descripcion ) {
         alert("Por favor complete todos los campos obligatorios");
         return;
     }
@@ -145,13 +142,13 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
         const respuesta = await fetch(`${API_URL}/${id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({cliente, viaje, fecha, personas, estado})
+            body: JSON.stringify({Nombre, Lugar, Tipo, Descripcion})
         });
 
         if (respuesta.ok) {
-            alert("Destino actualizado correctamente");
+            alert("Registro actualizado correctamente");
             modalEditar.close();
-            ObtenerReservaciones();
+            ObtenerDestinos();
         } else {
             throw new Error("Error en la respuesta del servidor");
         }
@@ -162,7 +159,7 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
 });
 
 // Eliminar integrante
-async function EliminarViaje(id) {
+async function EliminarDestino(id) {
     const confirmacion = confirm("¿Está seguro que desea eliminar este registro?");
 
     if (confirmacion) {
@@ -172,8 +169,8 @@ async function EliminarViaje(id) {
             });
 
             if (respuesta.ok) {
-                alert("El destino ha sido eliminado correctamente");
-                ObtenerReservaciones();
+                alert("Registro eliminado correctamente");
+                ObtenerDestinos();
             } else {
                 throw new Error("Error en la respuesta del servidor");
             }
