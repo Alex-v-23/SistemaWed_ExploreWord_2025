@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="CSS/Destinos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
+ 
 <body>
     <div id="contenedor-app">
         <div id="menu-lateral" class="menu-lateral">
@@ -16,7 +16,6 @@
                 <img src="img/Logo.png" class="TamañoImagen">
                 <span class="material-symbols-outlined">Explore world</span>
             </div>
-
             <a href="Admin.html">
                 <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
                 <span class="texto-menu">Inicio</span>
@@ -46,12 +45,12 @@
                 <span class="texto-menu">Servicios</span>
             </a>
         </div>
-
+ 
         <div id="contenido-principal">
             <header class="barra-superior">
                 <h1>Destinos</h1>
             </header>
-
+ 
             <main class="container">
                 <div class="tabla-scroll">
                     <h3>Destinos Disponibles</h3>
@@ -74,7 +73,7 @@
             </main>
         </div>
     </div>
-
+ 
     <!-- Modal para agregar -->
     <dialog id="mdAgregar">
         <article>
@@ -103,7 +102,7 @@
             </form>
         </article>
     </dialog>
-
+ 
     <!-- Modal para editar -->
     <dialog id="mdEditar">
         <article>
@@ -123,7 +122,7 @@
                 </div>
                 <div class="form-group">
                     <label for="txtTipoEditar">Tipo:</label>
-                    <input type="text" id="dateTipoEditar" placeholder="Tipo">
+                    <input type="text" id="txtTipoEditar" placeholder="Tipo">
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcionEditar">Descripcion:</label>
@@ -133,13 +132,13 @@
             </form>
         </article>
     </dialog>
-
+ 
     <!-- Botón flotante -->
     <button id="BtnAgregar" class="add-button">
         <i class="fas fa-plus"></i>
     </button>
-
+ 
     <script src="js/Destinos.js"></script>
 </body>
-
+ 
 </html>
