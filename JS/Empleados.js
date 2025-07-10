@@ -89,18 +89,18 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     e.preventDefault(); // e Representa a submit. Evita que el formulario se envie solo.
 
     //Capturar los valores del formulario
-    const rango = document.getElementById("IntRango").value.trim();
-    const nombre = document.getElementById("txtNombre").value.trim();
-    const apellido = document.getElementById("txtApellido").value.trim();
-    const correo = document.getElementById("txtCorreo").value.trim();
-    const fechaNacimiento = document.getElementById("dateFechaNacimiento").value.trim();
-    const telefono = document.getElementById("TxtTelefono").value.trim();
-    const direccion = document.getElementById("txtDireccion").value.trim();
+    const Rango = document.getElementById("IntRango").value.trim();
+    const Nombres = document.getElementById("txtNombre").value.trim();
+    const Apellidos = document.getElementById("txtApellido").value.trim();
+    const Correo = document.getElementById("txtCorreo").value.trim();
+    const FechaNacimiento = document.getElementById("dateFechaNacimiento").value.trim();
+    const Telefono = document.getElementById("txtTelefono").value.trim();
+    const Direccion = document.getElementById("txtDireccion").value.trim();
 
 
     //Validadcion basica
 
-    if(!rango || !nombre || !apellido || !correo || !fechaNacimiento || !telefono || !Direccion){
+    if(!Rango || !Nombres || !Apellidos || !Correo || !FechaNacimiento || !Telefono || !Direccion){
         alert("Ingresar los valores correctamente");
         return; //Para evitar que el codigo se siga ejecutando
     }
@@ -109,7 +109,7 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     const respuesta = await fetch(API_URL, {
         method: "POST", //Tipo de solicitud
         headers: {'Content-Type':'application/json'}, //Tipo de datos enviados
-        body: JSON.stringify({rango,nombre,apellido,correo,fechaNacimiento,telefono,direccion})//Datos enviados
+        body: JSON.stringify({Rango,Nombres,Apellidos,Correo,FechaNacimiento,Telefono,Direccion})//Datos enviados
     });
 
     //Verificacion si la API rsponde que los datos fueron enviados correctamente
@@ -134,16 +134,17 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
 // Formulario para editar
 document.getElementById("frmEditar").addEventListener("submit", async e => {
     e.preventDefault();
+    
+    const id = document.getElementById("txtIdEditar").value.trim();
+    const Rango = document.getElementById("IntRangoEditar").value.trim();
+    const Nombres = document.getElementById("txtNombreEditar").value.trim();
+    const Apellidos = document.getElementById("txtApellidoEditar").value.trim();
+    const Correo = document.getElementById("txtCorreoEditar").value.trim();
+    const FechaNacimiento = document.getElementById("dateFechaNacimientoEditar").value.trim();
+    const Telefono = document.getElementById("txtTelefonoEditar").value.trim();
+    const Direccion = document.getElementById("txtDireccionEditar").value.trim();
 
-     const rango = document.getElementById("IntRangoEditar").value.trim();
-    const nombre = document.getElementById("txtNombreEditar").value.trim();
-    const apellido = document.getElementById("txtApellidoEditar").value.trim();
-    const correo = document.getElementById("txtCorreoEditar").value.trim();
-    const fechaNacimiento = document.getElementById("dateFechaNacimientoEditar").value.trim();
-    const telefono = document.getElementById("TxtTelefonoEditar").value.trim();
-    const direccion = document.getElementById("txtDireccionEditar").value.trim();
-
-    if (!rango || !nombre || !apellido || !correo || !fechaNacimiento || !telefono || !direccion) {
+    if (!Rango || !Nombres || !Apellidos || !Correo || !FechaNacimiento || !Telefono || !Direccion) {
         alert("Por favor complete todos los campos obligatorios");
         return;
     }
@@ -152,11 +153,11 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
         const respuesta = await fetch(`${API_URL}/${id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({cliente, viaje, fecha, personas, estado})
+            body: JSON.stringify({Rango,Nombres,Apellidos,Correo,FechaNacimiento,Telefono, Direccion})
         });
 
         if (respuesta.ok) {
-            alert("Destino actualizado correctamente");
+            alert("Empleado actualizado correctamente");
             modalEditar.close();
             ObtenerEmpleados();
         } else {
