@@ -166,31 +166,6 @@
           margin-right: 0;
       }
 
-      @media screen and (max-height: 450px) {
-          .menu-lateral {
-              padding-top: 15px;
-              /* Reduce el padding superior si la altura de la pantalla es pequeña */
-          }
-
-          .menu-lateral a {
-              font-size: 16px;
-              /* Reduce el tamaño de fuente de los ítems del menú */
-              padding: 10px 10px;
-              /* Reduce el padding de los ítems */
-          }
-
-          .menu-lateral .btn-cerrar {
-              font-size: 25px;
-              /* Reduce el tamaño del botón de cerrar */
-              top: 10px;
-              right: 10px;
-          }
-
-          .menu-lateral .titulo-menu {
-              padding: 10px 10px;
-          }
-      }
-
       /* Contenido Principal */
       #contenedor-app {
           display: flex;
@@ -422,4 +397,199 @@
 
       .close:hover {
           color: #333;
+      }
+
+      /* ESTILOS BASE PARA TODAS LAS TABLAS */
+      .table-container {
+          width: 100%;
+          overflow-x: auto;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          margin-bottom: 20px;
+      }
+
+      .responsive-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .responsive-table th {
+          background-color: #2c3e50;
+          color: white;
+          font-weight: 600;
+          padding: 12px 15px;
+          text-align: left;
+      }
+
+      .responsive-table td {
+          padding: 12px 15px;
+          border-bottom: 1px solid #e0e0e0;
+          vertical-align: middle;
+      }
+
+      .responsive-table tr:hover {
+          background-color: #f5f5f5;
+      }
+
+      /* ESTILOS PARA BOTONES */
+      .actions {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+      }
+
+      .btn-action {
+          border: none;
+          border-radius: 4px;
+          padding: 8px 12px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          transition: all 0.3s ease;
+          font-size: 14px;
+      }
+
+      .btn-edit {
+          background-color: #3498db;
+          color: white;
+      }
+
+      .btn-delete {
+          background-color: #e74c3c;
+          color: white;
+      }
+
+      .btn-action i {
+          margin-right: 5px;
+      }
+
+      .btn-action:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-edit:hover {
+          background-color: #2980b9;
+      }
+
+      .btn-delete:hover {
+          background-color: #c0392b;
+      }
+
+      /* DISEÑO RESPONSIVO */
+      @media (max-width: 768px) {
+          .responsive-table {
+              display: block;
+          }
+
+          .responsive-table thead {
+              display: none;
+          }
+
+          .responsive-table tr {
+              display: block;
+              margin-bottom: 15px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              padding: 10px;
+          }
+
+          .responsive-table td {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 8px 10px;
+              border-bottom: 1px solid #eee;
+              text-align: right;
+          }
+
+          .responsive-table td::before {
+              content: attr(data-label);
+              font-weight: bold;
+              margin-right: auto;
+              text-align: left;
+              padding-right: 20px;
+          }
+
+          .actions {
+              justify-content: flex-end;
+          }
+
+          .btn-text {
+              display: none;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .btn-action {
+              padding: 6px;
+              font-size: 12px;
+          }
+
+          .btn-action i {
+              margin-right: 0;
+          }
+      }
+
+      @media (max-width: 1200px) {
+
+          table th,
+          table td {
+              padding: 8px 10px;
+              font-size: 0.8em;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .tabla-scroll {
+              overflow-x: auto;
+              display: block;
+          }
+
+          table {
+              width: max-content;
+          }
+
+          .container {
+              padding: 10px;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .add-button {
+              width: 50px;
+              height: 50px;
+              font-size: 20px;
+              bottom: 20px;
+              right: 20px;
+          }
+
+          dialog {
+              width: 95%;
+          }
+      }
+
+      @media screen and (max-width: 600px) {
+          table {
+              width: 100%;
+          }
+
+          td {
+              display: block;
+              text-align: right;
+              padding-left: 50%;
+              position: relative;
+          }
+
+          td::before {
+              content: attr(data-label);
+              position: absolute;
+              left: 10px;
+              font-weight: bold;
+          }
+
+          th {
+              display: none;
+          }
       }

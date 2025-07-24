@@ -12,6 +12,82 @@
           display: flex;
       }
 
+      /* Añadir al inicio del archivo Admin.css */
+      :root {
+          --sidebar-width: 99px;
+          --sidebar-expanded: 250px;
+          --header-height: 60px;
+          --card-padding: 15px;
+      }
+
+      /* Media Queries comunes */
+      @media (max-width: 1200px) {
+          .dashboard-grid {
+              grid-template-columns: repeat(2, 1fr);
+          }
+
+          .seccion-graficos {
+              flex-direction: column;
+              height: auto;
+          }
+
+          .contenedor-grafico-circular,
+          .contenedor-grafico-lineal {
+              min-width: 100%;
+              margin-bottom: 20px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .dashboard-grid {
+              grid-template-columns: 1fr;
+          }
+
+          .dashboard-card {
+              padding: var(--card-padding);
+          }
+
+          .container,
+          .card2 {
+              width: 95%;
+              padding: 15px;
+          }
+
+          .cards {
+              flex-direction: column;
+              align-items: center;
+          }
+
+          .card,
+          .card-2 {
+              width: 100%;
+              max-width: none;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .menu-lateral {
+              width: 60px;
+          }
+
+          .menu-lateral:hover {
+              width: 200px;
+          }
+
+          .menu-lateral a {
+              padding: 10px 15px;
+          }
+
+          .menu-lateral .titulo-menu img {
+              width: 40px;
+              height: 40px;
+          }
+
+          .barra-superior h1 {
+              font-size: 18px;
+          }
+      }
+
       /* -------------------- Menú Lateral (Sidebar) -------------------- */
       .menu-lateral {
           width: 99px;
@@ -164,31 +240,6 @@
 
       .TamañoImagen {
           margin-right: 0;
-      }
-
-      @media screen and (max-height: 450px) {
-          .menu-lateral {
-              padding-top: 15px;
-              /* Reduce el padding superior si la altura de la pantalla es pequeña */
-          }
-
-          .menu-lateral a {
-              font-size: 16px;
-              /* Reduce el tamaño de fuente de los ítems del menú */
-              padding: 10px 10px;
-              /* Reduce el padding de los ítems */
-          }
-
-          .menu-lateral .btn-cerrar {
-              font-size: 25px;
-              /* Reduce el tamaño del botón de cerrar */
-              top: 10px;
-              right: 10px;
-          }
-
-          .menu-lateral .titulo-menu {
-              padding: 10px 10px;
-          }
       }
 
 
@@ -482,37 +533,119 @@
           color: rgb(46, 65, 189);
       }
 
-      /* Responsive */
-      @media (max-width: 1200px) {
-          .cards {
-              flex-direction: column;
-              align-items: center;
+      /* DISEÑO RESPONSIVO */
+      @media (max-width: 768px) {
+          .responsive-table {
+              display: block;
           }
 
-          .card,
-          .card-2 {
-              max-width: 100%;
+          .responsive-table thead {
+              display: none;
+          }
+
+          .responsive-table tr {
+              display: block;
+              margin-bottom: 15px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              padding: 10px;
+          }
+
+          .responsive-table td {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 8px 10px;
+              border-bottom: 1px solid #eee;
+              text-align: right;
+          }
+
+          .responsive-table td::before {
+              content: attr(data-label);
+              font-weight: bold;
+              margin-right: auto;
+              text-align: left;
+              padding-right: 20px;
+          }
+
+          .actions {
+              justify-content: flex-end;
+          }
+
+          .btn-text {
+              display: none;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .btn-action {
+              padding: 6px;
+              font-size: 12px;
+          }
+
+          .btn-action i {
+              margin-right: 0;
+          }
+      }
+
+      @media (max-width: 1200px) {
+
+          table th,
+          table td {
+              padding: 8px 10px;
+              font-size: 0.8em;
           }
       }
 
       @media (max-width: 768px) {
-          .navbar h2 {
-              margin-left: 20px;
-              font-size: 22px;
+          .tabla-scroll {
+              overflow-x: auto;
+              display: block;
           }
 
-          .nav-icons {
-              margin-right: 20px;
+          table {
+              width: max-content;
           }
 
-          .container,
-          .card2 {
+          .container {
+              padding: 10px;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .add-button {
+              width: 50px;
+              height: 50px;
+              font-size: 20px;
+              bottom: 20px;
+              right: 20px;
+          }
+
+          dialog {
               width: 95%;
-              padding: 20px;
+          }
+      }
+
+      @media screen and (max-width: 600px) {
+          table {
+              width: 100%;
           }
 
-          .container h2,
-          .card2 h2 {
-              font-size: 22px;
+          td {
+              display: block;
+              text-align: right;
+              padding-left: 50%;
+              position: relative;
+          }
+
+          td::before {
+              content: attr(data-label);
+              position: absolute;
+              left: 10px;
+              font-weight: bold;
+          }
+
+          th {
+              display: none;
           }
       }
