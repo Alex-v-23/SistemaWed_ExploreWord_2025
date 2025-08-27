@@ -9,7 +9,10 @@ const btnCerrar = document.getElementById("btnCerrar");
 const btnCerrarEditar = document.getElementById("btnCerrarEditar");
 
 // Obtener integrantes al cargar la página
-document.addEventListener('DOMContentLoaded', ObtenerViajes);
+document.addEventListener('DOMContentLoaded', function() {
+    ObtenerViajes();
+    inicializarValidacionesPrecios();
+});
 
 // Función para obtener integrantes
 async function ObtenerViajes() {
@@ -32,6 +35,9 @@ function MostrarDatos(datos) {
     tabla.innerHTML = "";
 
     datos.forEach(Viaje => {
+       
+      const precioFormateado = '$' + parseFloat(Viaje.precio || 0).toFixed(2);
+
         tabla.innerHTML += `
         <tr>
             <td>${Viaje.id}</td>
@@ -235,4 +241,100 @@ async function EliminarViaje(id) {
       icon: "error"
     });
   } 
+}
+
+function formatearPrecio(valor) {
+    // Limpiar el valor de caracteres no numéricos excepto punto
+    let numero = valor.replace(/[^0-9.]/g, '');
+    
+    // Prevenir múltiples puntos
+    const partes = numero.split('.');
+    if (partes.length > 2) {
+        numero = partes[0] + '.' + partes[1];
+    }
+    
+    // Limitar a 2 decimales
+    if (partes[1] && partes[1].length > 2) {
+        numero = partes[0] + '.' + partes[1].substring(0, 2);
+    }
+    
+    return numero;
+}
+
+// Función para obtener valor numérico del campo con $
+function obtenerValorNumerico(valor) {
+    return valor.replace(/[$,]/g, '');
+}
+
+// Validaciones para campos de precio - Prevenir números negativos
+document.addEventListener('DOMContentLoaded', function() {
+    // Prevenir entrada de signo menos en campos de precio
+    const camposPrecios = ['txtPrecio', 'txtPrecioEditar'];
+    
+    camposPrecios.forEach(function(campoId) {
+        const campo = document.getElementById(campoId);
+        if (campo) {
+            // Prevenir tecla de signo menos
+            campo.addEventListener('keydown', function(e) {
+                if (e.key === '-' || e.key === 'Subtract') {
+                    e.preventDefault();
+                }
+            });
+
+            // Prevenir valores negativos al pegar
+            campo.addEventListener('paste', function(e) {
+                setTimeout(() => {
+                    if (this.value < 0) {
+                        this.value = '';
+                    }
+                }, 10);
+            });
+
+            // Validar en tiempo real
+            campo.addEventListener('input', function(e) {
+                if (this.value < 0) {
+                    this.value = '';
+                }
+            });
+        }
+    });
+});
+
+//Validaciones para campos de precio - Prevenir números negativos
+function inicializarValidacionesPrecios() {
+  const camposPrecios = ['txtPrecio', 'txtPrecioEditar'];
+
+  camposPrecios.forEach(function (campoId) {
+    const campo = document.getElementById(campoId);
+    if (campo) {
+      // Formato en tiempo real
+      campo.addEventListener('input', function (e) {
+        const valorFormateado = formatearPrecio(this.value);
+        if (valorFormateado && !isNaN(valorFormateado) && parseFloat(valorFormateado) >= 0) {
+          if (this.value !== valorFormateado) {
+            this.value = valorFormateado;
+          }
+        } else if (valorFormateado === '') {
+          this.value = '';
+        }
+      });
+
+      // Prevenir caracteres no deseados
+      campo.addEventListener('keydown', function (e) {
+        if (e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') {
+          e.preventDefault();
+        }
+      });
+
+      // Formatear al perder el foco
+      campo.addEventListener('blur', function (e) {
+        if (this.value && !isNaN(this.value)) {
+          const numero = parseFloat(this.value);
+          if (numero >= 0) {
+            this.value = numero.toFixed(2);
+          }
+        }
+      });
+    }
+  });
 }
