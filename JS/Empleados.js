@@ -18,8 +18,11 @@ async function ObtenerEmpleados() {
         const data = await respuesta.json();
         MostrarDatos(data);
     } catch (error) {
-        console.error("Error al obtener las reservaciones:", error);
-        alert("Error al cargar los datos. Por favor recarga la página.");
+        Swal.fire({
+        title: "Error",
+        text: "Error al cargar los registros",
+        icon: "error", error
+    });
     }
 }
 
@@ -101,7 +104,12 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     //Validadcion basica
 
     if(!Rango || !Nombres || !Apellidos || !Correo || !FechaNacimiento || !Telefono || !Direccion){
-        alert("Ingresar los valores correctamente");
+        Swal.fire({
+        title: "Error",
+        text: "Ingrese los valores correctamente",
+        icon: "error"
+    });
+        
         return; //Para evitar que el codigo se siga ejecutando
     }
 
@@ -114,7 +122,12 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
 
     //Verificacion si la API rsponde que los datos fueron enviados correctamente
     if(respuesta.ok){
-        alert("El registro fue agregado correctamente");
+        
+        Swal.fire({
+        title: "Exito",
+        text: "El registro fue agregado correctamente",
+        icon: "success"
+    });
 
         //Limpiar el formulario
         document.getElementById("frmAgregar").reset();
@@ -126,7 +139,11 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
         ObtenerEmpleados();
     }else{
         //En caso de que la API no devuelva un codigo diferente a 200-299
-        alert("El registro no pudo ser agregado");
+        Swal.fire({
+        title: "Error",
+        text: "El registro no pudo ser agregado correctamente",
+        icon: "error"
+    });
     }
 });
 
@@ -145,7 +162,12 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
     const Direccion = document.getElementById("txtDireccionEditar").value.trim();
 
     if (!Rango || !Nombres || !Apellidos || !Correo || !FechaNacimiento || !Telefono || !Direccion) {
-        alert("Por favor complete todos los campos obligatorios");
+        
+        Swal.fire({
+        title: "Error",
+        text: "Ingrese los datos correctamente",
+        icon: "error"
+    });
         return;
     }
 
@@ -157,37 +179,72 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
         });
 
         if (respuesta.ok) {
-            alert("Empleado actualizado correctamente");
+            Swal.fire({
+        title: "Exito",
+        text: "El registro fue actualizado correctamente",
+        icon: "success"
+    });
+            
             modalEditar.close();
             ObtenerEmpleados();
         } else {
             throw new Error("Error en la respuesta del servidor");
         }
     } catch (error) {
-        console.error("Error al actualizar:", error);
-        alert("Error al actualizar el registro");
+        Swal.fire({
+        title: "Error",
+        text: "El registro no pudo ser actualizado correctamente",
+        icon: "error", error
+    });
     }
 });
 
 // Eliminar integrante
 async function EliminarEmpleado(id) {
-    const confirmacion = confirm("¿Está seguro que desea eliminar este registro?");
+    try {
+    // Esperamos la confirmación del usuario
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Deseas eliminar este registro?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar"
+    });
 
-    if (confirmacion) {
-        try {
-            const respuesta = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE"
-            });
+    // Si el usuario confirma, continuamos
+    if (result.isConfirmed) {
+      const respuesta = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+      });
 
-            if (respuesta.ok) {
-                alert("El destino ha sido eliminado correctamente");
-                ObtenerEmpleados();
-            } else {
-                throw new Error("Error en la respuesta del servidor");
-            }
-        } catch (error) {
-            console.error("Error al eliminar:", error);
-            alert("Error al eliminar el registro");
-        }
+      if (respuesta.ok) {
+        Swal.fire({
+          title: "¡Eliminado!",
+          text: "El registro fue eliminado correctamente.",
+          icon: "success"
+        });
+        ObtenerEmpleados(); // Actualiza la lista
+      } else {
+        throw new Error("Error en la respuesta del servidor");
+      }
+    } else {
+      // El usuario canceló
+      Swal.fire({
+        title: "Cancelado",
+        text: "El registro no fue eliminado.",
+        icon: "info"
+      });
     }
+
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    Swal.fire({
+      title: "Error",
+      text: "Hubo un problema al eliminar el registro.",
+      icon: "error"
+    });
+  } 
 }

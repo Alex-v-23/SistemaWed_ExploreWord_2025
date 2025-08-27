@@ -18,8 +18,8 @@ async function ObtenerDestinos() {
         const data = await respuesta.json();
         MostrarDatos(data);
     } catch (error) {
-        console.error("Error al obtener los destinos:", error);
-        alert("Error al cargar los datos. Por favor recarga la página.");
+        Swal.fire("Error al obtener los destinos", error);
+        
     }
 }
  
@@ -93,7 +93,7 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
     //Validadcion basica
  
     if(!Nombre || !Lugar || !Tipo || !Descripcion){
-        alert("Ingresar los valores correctamente");
+        Swal.fire("Ingrese los valores correctamente");
         return; //Para evitar que el codigo se siga ejecutando
     }
  
@@ -106,7 +106,11 @@ document.getElementById("frmAgregar").addEventListener("submit",async e =>{
  
     //Verificacion si la API rsponde que los datos fueron enviados correctamente
     if(respuesta.ok){
-        alert("El registro fue agregado correctamente");
+        Swal.fire({
+        title: "Exito",
+        text: "El registro fue agregado correctamente",
+        icon: "success"
+    });
  
         //Limpiar el formulario
         document.getElementById("frmAgregar").reset();
@@ -134,7 +138,7 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
     const Descripcion = document.getElementById("txtDescripcionEditar").value.trim();
  
     if (!id || !Nombre || !Lugar || !Tipo || !Descripcion ) {
-        alert("Por favor complete todos los campos obligatorios");
+        Swal.fire("Ingrese los valores correctamente");
         return;
     }
  
@@ -146,7 +150,11 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
         });
  
         if (respuesta.ok) {
-            alert("Registro actualizado correctamente");
+            Swal.fire({
+            title: "Exito",
+            text: "El registro fue actualizado correctamente",
+            icon: "success"
+        });    
             modalEditar.close();
             ObtenerDestinos();
         } else {
@@ -154,30 +162,62 @@ document.getElementById("frmEditar").addEventListener("submit", async e => {
         }
     } catch (error) {
         console.error("Error al actualizar:", error);
-        alert("Error al actualizar el registro");
+        Swal.fire({
+        title: "Error",
+        text: "El registro no pudo ser actualizado correctamente",
+        icon: "error"
+    });
     }
 });
  
 // Eliminar integrante
 async function EliminarDestino(id) {
-    const confirmacion = confirm("¿Está seguro que desea eliminar este registro?");
- 
-    if (confirmacion) {
-        try {
-            const respuesta = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE"
-            });
- 
-            if (respuesta.ok) {
-                alert("Registro eliminado correctamente");
-                ObtenerDestinos();
-            } else {
-                throw new Error("Error en la respuesta del servidor");
-            }
-        } catch (error) {
-            console.error("Error al eliminar:", error);
-            alert("Error al eliminar el registro");
-        }
+  try {
+    // Esperamos la confirmación del usuario
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Deseas eliminar este registro?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar"
+    });
+
+    // Si el usuario confirma, continuamos
+    if (result.isConfirmed) {
+      const respuesta = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+      });
+
+      if (respuesta.ok) {
+        Swal.fire({
+          title: "¡Eliminado!",
+          text: "El registro fue eliminado correctamente.",
+          icon: "success"
+        });
+        ObtenerDestinos(); // Actualiza la lista
+      } else {
+        throw new Error("Error en la respuesta del servidor");
+      }
+    } else {
+      // El usuario canceló
+      Swal.fire({
+        title: "Cancelado",
+        text: "El registro no fue eliminado.",
+        icon: "info"
+      });
     }
+
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    Swal.fire({
+      title: "Error",
+      text: "Hubo un problema al eliminar el registro.",
+      icon: "error"
+    });
+  }
 }
+
  
