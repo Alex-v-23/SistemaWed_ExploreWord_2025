@@ -1,10 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de turismo</title>
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Incluir Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Incluir Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    
+    <div id="contenedor-app">
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="titulo-menu">
+                <img src="img/Logo.png" class="TamañoImagen">
+                <span class="material-symbols-outlined">Explore world</span>
+            </div>
+
+            <a href="admin.html">
+                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
+                <span class="texto-menu">Inicio</span>
+            </a>
+            <a href="viajes.html">
+                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
+                <span class="texto-menu">Viajes</span>
+            </a>
+            <a href="empleados.html">
+                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
+                <span class="texto-menu">Empleados</span>
+            </a>
+            <a href="destinos.html">
+                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
+                <span class="texto-menu">Destinos</span>
+            </a>
+            <a href="factura.html">
+                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
+                <span class="texto-menu">Factura</span>
+            </a>
+            <a href="reservaciones.html">
+                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
+                <span class="texto-menu">Reservaciones</span>
+            </a>
+            <a href="servicios.html">
+                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
+                <span class="texto-menu">Servicios</span>
+            </a>
+        </div>
+
+        <div id="contenedor-app">
+            <!-- Contenido principal -->
+            <div id="contenido-principal">
+                <header class="barra-superior">
+                    <h1>Bienvenidos</h1>
+                </header>
+
+                <div class="dashboard-container">
+                    <!-- Métricas principales con iconos -->
+                    <div class="dashboard-grid">
+
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-route"></i>
+                            <h2>Viajes activos</h2>
+                            <div class="valor">24</div>
+                            <div class="variacion positivo">+12% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h2>Ingresos mensuales</h2>
+                            <div class="valor">$12,450</div>
+                            <div class="variacion negativo">-5% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-user-plus"></i>
+                            <h2>Clientes nuevos</h2>
+                            <div class="valor">18</div>
+                            <div class="variacion positivo">+20% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h2>Reservaciones</h2>
+                            <div class="valor">32</div>
+                            <div class="variacion positivo">+8% vs mes pasado</div>
+                        </div>
+                    </div>
+
+                    <!-- Secciones inferiores -->
+                    <div class="dashboard-secciones">
+                        <div class="seccion-graficos">
+                            <!-- Gráfico circular -->
+                            <div class="contenedor-grafico-circular">
+                                <h2>Destinos</h2>
+                                <canvas class="grafico-circular" id="graficoCircularDestinos"></canvas>
+                            </div>
+
+                            <!-- Gráfico de ingresos -->
+                            <div class="contenedor-grafico-lineal">
+                                <h2>Ingresos mensuales</h2>
+                                <canvas id="grafico-ingresos"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-----------------------Seccion de informacion de abajo--------------------------------------->
+
+                <div class="container">
+                    <h2>Destinos Turísticos De El Salvador</h2>
+
+                    <div class="cards">
+                        <!-- Tarjeta 1: Ruta de las flores -->
+                        <div class="card">
+                            <div>
+                                <h2>Ruta de las flores</h2>
+                                <img src="img/ruta las flores.jpeg" alt="Ruta de las flores">
+                            </div>
+                            <div class="contenido">
+                                <div class="item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p>Departamento: Sonsonate</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <p>Pueblos Coloniales: Juayúa, Apaneca, Ataco</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-star"></i>
+                                    <p>Atractivos: Cafetales, gastronomía, festivales</p>
+                                </div>
+                            </div>
+                            <div class="Info">
+                                <p>Es un recorrido pintoresco por pueblos coloniales famosos por sus cafetales y
+                                    festivales gastronómicos los fines de semana. La ruta ofrece paisajes montañosos,
+                                    clima fresco y artesanías locales.</p>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 2: Playa el tunco -->
+                        <div class="card-2">
+                            <div>
+                                <h2>Playa el tunco</h2>
+                                <img src="img/Playa el tunco.jpeg" alt="Playa el tunco">
+                            </div>
+                            <div class="contenido">
+                                <div class="item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p>Departamento: La Libertad</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <p>Ambiente: Bohemio, surfista</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-star"></i>
+                                    <p>Atractivos: Atardeceres, hoteles boutique</p>
+                                </div>
+                            </div>
+                            <div class="Info">
+                                <p>La playa más famosa para surfistas con ambiente bohemio, hoteles boutique,
+                                    restaurantes y espectaculares atardeceres sobre el Océano Pacífico.</p>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 3: Playa el tunco -->
+                        <div class="card-2">
+                            <div>
+                                <h2>Lago coatepeque</h2>
+                                <img src="img/Lago coatepeque.jpeg" alt="Lago coatepeque">
+                            </div>
+                            <div class="contenido">
+                                <div class="item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p>Departamento: La Libertad</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <p>Ambiente: Bohemio, surfista</p>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-star"></i>
+                                    <p>Atractivos: Atardeceres, hoteles boutique</p>
+                                </div>
+                            </div>
+                            <div class="Info">
+                                <p>La playa más famosa para surfistas con ambiente bohemio, hoteles boutique,
+                                    restaurantes y espectaculares atardeceres sobre el Océano Pacífico.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Sección "Por qué visitar" -->
+                <nav class="card2">
+                    <div>
+                        <h2>¿Por qué visitar El Salvador?</h2>
+                        <div>
+                            <p>El Salvador conocido como el "Pulgarcito De América", ofrece una gran diversidad en un
+                                territorio pequeño: playas paradisíacas, volcanes imponentes, pueblos coloniales y una
+                                rica cultura.</p>
+                        </div>
+                        <div>
+                            <p>Nuestros tours incluyen:</p>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><i class="fa-solid fa-check"></i> Guías turísticos certificados</li>
+                                <li><i class="fa-solid fa-check"></i> Transporte seguro y cómodo</li>
+                                <li><i class="fa-solid fa-check"></i> Alimentación típica incluida</li>
+                                <li><i class="fa-solid fa-check"></i> Seguro médico básico</li>
+                                <li><i class="fa-solid fa-check"></i> Acceso a los mejores miradores y atracciones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+
+
+
+
+
+            <script src="js/index.js"></script>
 </body>
+
 </html>

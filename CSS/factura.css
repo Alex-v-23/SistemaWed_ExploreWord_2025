@@ -1,0 +1,248 @@
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+
+ body {
+     background-color: #f5f7fa;
+     color: #333;
+     display: flex;
+     min-height: 100vh;
+ }
+
+ /* -------------------- Menú Lateral (Sidebar) -------------------- */
+ @media (max-width: 576px) {
+     .menu-lateral {
+         width: 60px;
+     }
+
+     .menu-lateral:hover {
+         width: 200px;
+     }
+
+     .menu-lateral a {
+         padding: 10px 15px;
+     }
+
+     .menu-lateral .titulo-menu img {
+         width: 40px;
+         height: 40px;
+     }
+
+     .barra-superior h1 {
+         font-size: 18px;
+     }
+ }
+
+ /* -------------------- Menú Lateral (Sidebar) -------------------- */
+ .menu-lateral {
+     width: 99px;
+     /* Ancho inicial del menú: solo muestra los íconos */
+     position: relative;
+     z-index: 100;
+     background-color: #1E40AF;
+     /* Color de fondo oscuro */
+     overflow-x: hidden;
+     /* Oculta cualquier contenido (como el texto) que exceda el ancho del menú */
+     transition: width 0.5s ease;
+     /* Transición suave cuando el ancho del menú cambia (abre/cierra) */
+     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+     /* Sombra a la derecha del menú */
+     flex-shrink: 0;
+     /* Evita que el menú se encoja si el espacio es limitado */
+     display: flex;
+     flex-direction: column;
+     padding-top: 10px;
+     /* Espacio superior dentro del menú */
+     height: 100vh;
+     min-height: 100%;
+ }
+
+ /* Efecto al pasar el mouse sobre el menú lateral para expandirlo */
+ .menu-lateral:hover {
+     width: 250px;
+     /* El menú se expande a un ancho mayor */
+ }
+
+ /* Título y logo dentro del menú lateral */
+ .menu-lateral .titulo-menu {
+     display: flex;
+     align-items: center;
+     padding: 15px 20px;
+     /* Espaciado interno */
+     color: #ecf0f1;
+     font-size: 1.25rem;
+     font-weight: bold;
+     white-space: nowrap;
+     overflow: hidden;
+     /* Oculta el texto del título cuando el menú está cerrado */
+     transition: all 0.5s ease;
+     margin-bottom: 5px;
+     /* Espacio debajo del título antes de los ítems del menú */
+ }
+
+ .menu-lateral .titulo-menu img {
+     /* Estilo para el logo en el título */
+     width: 60px;
+     /* Tamaño del logo ajustado */
+     height: 60px;
+     /* Altura del logo ajustada */
+     border-radius: 50%;
+     /* Para que sea circular */
+     margin-right: 18px;
+     /* Espacio a la derecha del logo */
+     object-fit: cover;
+     flex-shrink: 0;
+     /* Evita que la imagen se encoja */
+ }
+
+ /* El texto del título del menú ('Turismo SV') */
+ .menu-lateral .texto-menu-titulo {
+     opacity: 0;
+     /* Oculto por defecto (cuando el menú está cerrado) */
+     transition: opacity 0.4s ease-in-out;
+     /* Transición suave para la opacidad */
+     pointer-events: none;
+     /* No permite interacción con el texto invisible */
+     flex-shrink: 0;
+     /* Evita que el texto se encoja */
+ }
+
+ /* Mostrar el texto del título cuando el menú está abierto por hover */
+ .menu-lateral:hover .texto-menu-titulo {
+     opacity: 1;
+     /* El texto del título es completamente visible */
+     pointer-events: auto;
+     /* Permite la interacción */
+ }
+
+ /* Estilos de los enlaces (ítems) dentro del menú */
+ .menu-lateral a {
+     padding: 12px 30px;
+     /* Espaciado interno para cada ítem del menú */
+     text-decoration: none;
+     font-size: 14px;
+     /* Tamaño de fuente para el texto de los ítems */
+     color: #ecf0f1;
+     display: flex;
+     align-items: center;
+     white-space: nowrap;
+     transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease, border-left 0.3s ease;
+     overflow: hidden;
+     /* Oculta cualquier texto que se desborde del ancho actual del menú */
+     min-height: 12px;
+     /* Altura mínima para cada ítem, basado en el tamaño del ícono */
+ }
+
+ /* Estilos para las imágenes de los íconos dentro de los enlaces */
+ .menu-lateral a img {
+     width: 28px;
+     height: 28px;
+     margin-right: 15px;
+     flex-shrink: 0;
+     transition: margin-right 0.3s ease;
+     object-fit: contain;
+ }
+
+ /* Estilos cuando el menú está cerrado */
+
+ .menu-lateral:not(:hover) a img {
+     width: 28px;
+     height: 28px;
+     margin-right: 0;
+ }
+
+ /* Estilos cuando el menú está cerrado */
+
+ .menu-lateral a span {
+     display: inline;
+     align-items: center;
+     justify-content: center;
+ }
+
+ /* Eliminar las reglas conflictivas del span */
+
+ /* Asegurar que el contenedor del ícono mantenga su tamaño */
+
+
+ /* Efecto visual al pasar el ratón por los enlaces del menú */
+ .menu-lateral a:hover {
+     background-color: #95bce5;
+     /* Fondo al pasar el ratón */
+     color: #ffffff;
+     /* Texto blanco al pasar el ratón */
+     border-left: 5px solid #3b3b3b;
+     /* Pequeña barra azul a la izquierda */
+     padding-left: 15px;
+     /* Ajusta el padding para que el texto no se pegue al borde */
+ }
+
+ /* Estilos para el texto de cada opción del menú */
+ .menu-lateral .texto-menu {
+     opacity: 0;
+     /* Por defecto, el texto es invisible (menú cerrado) */
+     transition: opacity 0.4s ease-in-out;
+     /* Transición para que el texto aparezca/desaparezca suavemente */
+     pointer-events: none;
+     /* Asegura que no se pueda interactuar con el texto invisible */
+     flex-grow: 1;
+     /* Permite que el texto ocupe el espacio restante cuando visible */
+ }
+
+ /* Mostrar el texto de las opciones cuando el menú está abierto por hover */
+ .menu-lateral:hover .texto-menu {
+     opacity: 1;
+     /* El texto de las opciones es completamente visible */
+     pointer-events: auto;
+     /* Permite la interacción con el texto */
+ }
+
+ .TamañoImagen {
+     margin-right: 30px;
+ }
+
+
+
+ .invoice-container {
+     border: 2px solid #1e40af;
+     border-radius: 0.5rem;
+     background-color: white;
+     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+ }
+
+ .required:after {
+     content: "*";
+     color: red;
+     margin-left: 2px;
+ }
+
+ .invoice-table {
+     border-collapse: collapse;
+     width: 100%;
+ }
+
+ .invoice-table th,
+ .invoice-table td {
+     border: 1px solid #ddd;
+     padding: 8px;
+     text-align: left;
+ }
+
+ .invoice-table th {
+     background-color: #1e40af;
+     color: white;
+ }
+
+ .error-message {
+     color: red;
+     font-size: 0.875rem;
+     margin-top: 0.25rem;
+     display: none;
+ }
+
+ .im.mx-auto {
+     width: 50px;
+     height: 50px;
+ }
