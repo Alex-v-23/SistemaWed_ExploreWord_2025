@@ -12,6 +12,7 @@ const btnCerrarEditar = document.getElementById("btnCerrarEditar");
 document.addEventListener('DOMContentLoaded', function() {
     ObtenerViajes();
     inicializarValidacionesPrecios();
+    inicializarFechaFutura();
 });
 
 // Función para obtener integrantes
@@ -337,4 +338,22 @@ function inicializarValidacionesPrecios() {
       });
     }
   });
+
+
+}
+
+function inicializarFechaFutura() {
+  const campoFecha = document.getElementById("dateFecha");
+
+  if (campoFecha) {
+    const hoy = new Date();
+    hoy.setDate(hoy.getDate() + 1); // Mañana
+
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+
+    const fechaMinima = `${yyyy}-${mm}-${dd}`;
+    campoFecha.setAttribute("min", fechaMinima);
+  }
 }

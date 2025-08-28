@@ -9,7 +9,11 @@ const btnCerrar = document.getElementById("btnCerrar");
 const btnCerrarEditar = document.getElementById("btnCerrarEditar");
 
 // Obtener integrantes al cargar la página
-document.addEventListener('DOMContentLoaded', ObtenerReservaciones);
+document.addEventListener('DOMContentLoaded', function () {
+  ObtenerReservaciones();
+  inicializarFechaFutura();
+});
+
 
 // Función para obtener integrantes
 async function ObtenerReservaciones() {
@@ -236,3 +240,24 @@ async function EliminarViaje(id) {
     });
   } 
 }
+
+function inicializarFechaFutura() {
+  const camposFechas = ['dateFecha', 'dateFechaEditar'];
+
+  const hoy = new Date();
+  hoy.setDate(hoy.getDate() + 1); // Mañana
+
+  const yyyy = hoy.getFullYear();
+  const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+  const dd = String(hoy.getDate()).padStart(2, '0');
+
+  const fechaMinima = `${yyyy}-${mm}-${dd}`;
+
+  camposFechas.forEach(id => {
+    const campo = document.getElementById(id);
+    if (campo) {
+      campo.setAttribute('min', fechaMinima);
+    }
+  });
+}
+

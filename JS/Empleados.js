@@ -9,7 +9,11 @@ const btnCerrar = document.getElementById("btnCerrar");
 const btnCerrarEditar = document.getElementById("btnCerrarEditar");
 
 // Obtener integrantes al cargar la página
-document.addEventListener('DOMContentLoaded', ObtenerEmpleados);
+document.addEventListener('DOMContentLoaded', function () {
+  ObtenerEmpleados();
+  inicializarFechaPasada();
+});
+
 
 // Función para obtener integrantes
 async function ObtenerEmpleados() {
@@ -247,4 +251,21 @@ async function EliminarEmpleado(id) {
       icon: "error"
     });
   } 
+}
+
+function inicializarFechaPasada() {
+  const campo = document.getElementById('dateFechaNacimiento');
+  const campoEditar = document.getElementById('dateFechaNacimientoEditar'); // si también lo usas
+
+  const ahora = new Date();
+  const yyyy = ahora.getFullYear();
+  const mm = String(ahora.getMonth() + 1).padStart(2, '0');
+  const dd = String(ahora.getDate()).padStart(2, '0');
+  const hh = String(ahora.getHours()).padStart(2, '0');
+  const min = String(ahora.getMinutes()).padStart(2, '0');
+
+  const fechaHoraActual = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+
+  if (campo) campo.max = fechaHoraActual;
+  if (campoEditar) campoEditar.max = fechaHoraActual;
 }
