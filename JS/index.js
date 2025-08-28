@@ -1,21 +1,21 @@
 // Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Configurar el gráfico de ingresos mensuales
     setupIncomeChart();
-    
+
     // Configurar interacciones adicionales si son necesarias
     setupDashboardInteractions();
 });
 
 function setupIncomeChart() {
     const ctx = document.getElementById('grafico-ingresos');
-    
+
     // Verificar si el canvas existe
     if (!ctx) {
         console.error('No se encontró el elemento canvas para el gráfico de ingresos');
         return;
     }
-    
+
     // Datos para el gráfico
     const chartData = {
         labels: ['Ene', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -29,7 +29,7 @@ function setupIncomeChart() {
             fill: true
         }]
     };
-    
+
     // Opciones del gráfico
     const chartOptions = {
         responsive: true,
@@ -40,7 +40,7 @@ function setupIncomeChart() {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return '$' + context.raw.toLocaleString();
                     }
                 }
@@ -50,7 +50,7 @@ function setupIncomeChart() {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    callback: function(value) {
+                    callback: function (value) {
                         return '$' + value.toLocaleString();
                     },
                     stepSize: 2000
@@ -66,7 +66,7 @@ function setupIncomeChart() {
             }
         }
     };
-    
+
     // Crear el gráfico
     try {
         new Chart(ctx.getContext('2d'), {
@@ -83,37 +83,37 @@ function setupIncomeChart() {
 function setupDashboardInteractions() {
     // Configurar los checkboxes de destinos
     const checkboxes = document.querySelectorAll('.destinos-lista input[type="checkbox"]');
-    
+
     checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
+        checkbox.addEventListener('change', function () {
             console.log(`Destino ${this.id} ${this.checked ? 'marcado' : 'desmarcado'}`);
             // Aquí puedes agregar lógica adicional cuando se cambia un checkbox
         });
     });
-    
+
     // Configurar tooltips para las métricas si es necesario
     const metricCards = document.querySelectorAll('.dashboard-card');
-    
+
     metricCards.forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
             const metricName = this.querySelector('h2').textContent;
             console.log(`Card de ${metricName} clickeada`);
             // Aquí puedes agregar interacciones adicionales
         });
     });
-    
+
     // Verificar que todos los elementos estén presentes
     if (checkboxes.length === 0) {
         console.warn('No se encontraron checkboxes de destinos');
     }
-    
+
     if (metricCards.length === 0) {
         console.warn('No se encontraron cards de métricas');
     }
 }
 
 // Función para redimensionar el gráfico cuando cambia el tamaño de la ventana
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     // Los gráficos de Chart.js son responsive por defecto con la opción configurada
     console.log('Ventana redimensionada - gráficos se ajustarán automáticamente');
 });
@@ -122,11 +122,11 @@ window.addEventListener('resize', function() {
 // Asegúrate de tener este elemento en tu HTML:
 // <canvas class="grafico-circular" id="graficoCircularDestinos"></canvas>
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Configurar el gráfico circular
     const crearGraficoCircular = () => {
         const ctx = document.getElementById('graficoCircularDestinos');
-        
+
         // Verificar si el elemento existe
         if (!ctx) {
             console.error('No se encontró el elemento canvas para el gráfico circular');
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             const label = context.label || '';
                             const value = context.raw || 0;
                             const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -200,4 +200,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Llamar a la función de creación
     crearGraficoCircular();
+
 });
+
+document.getElementById("btnCerrarSecion").addEventListener("click", function  (e){
+    e.preventDefault();
+
+
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Se cerrará tu sesión.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cerrar sesión",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Aquí puedes poner la redirección real de logout
+            Swal.fire({
+                title: "Sesión cerrada",
+                text: "Has cerrado sesión correctamente.",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                // Redirige después del mensaje
+                window.location.href = result.close; // cambia a logout.php si usas backend
+            });
+        }
+    });
+});
+
+
+
+
+
+
+

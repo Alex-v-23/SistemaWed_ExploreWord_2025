@@ -32,3 +32,33 @@ document.getElementById("transport-form").addEventListener("submit", function (e
   document.getElementById("transport-form").reset();
   document.getElementById("form-section").classList.add("hidden");
 });
+
+document.getElementById("btnCerrarSecion").addEventListener("click", function  (e){
+    e.preventDefault();
+
+
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Se cerrará tu sesión.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cerrar sesión",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Aquí puedes poner la redirección real de logout
+            Swal.fire({
+                title: "Sesión cerrada",
+                text: "Has cerrado sesión correctamente.",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                // Redirige después del mensaje
+                window.location.href = result.close; // cambia a logout.php si usas backend
+            });
+        }
+    });
+});
