@@ -89,31 +89,31 @@
             <form id="frmAgregar">
                 <div class="form-group">
                     <label for="IntRango">Rango:</label>
-                    <input type="number" id="IntRango" placeholder="Rango del Empleado" required>
+                    <input type="number" id="IntRango" placeholder="Rango del Empleado" required min="1"  max="8">
                 </div>
                 <div class="form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" id="txtNombre" placeholder="Nombres del Empleado">
+                    <input type="text" id="txtNombre" placeholder="Nombres del Empleado" required minlength="3" maxlength="20"  pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtApellido">Apellido:</label>
-                    <input type="text" id="txtApellido" placeholder="Apellidos del Empleado">
+                    <input type="text" id="txtApellido" placeholder="Apellidos del Empleado" required minlength="3" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtCorreo">Correo:</label>
-                    <input type="email" id="txtCorreo" placeholder="Correo del Empleado">
+                    <input type="email" id="txtCorreo" placeholder="Correo del Empleado" required minlength="5" pattern="^[a-zA-Z0-9._]+@gmail\.com$" title="no puede incluir mas signos ademas de @ y debe tener @gmail y .com" >
                 </div>
                 <div class="form-group">
                     <label for="dateFechaNacimiento">Fecha de Nacimiento:</label>
-                    <input type="datetime-local" id="dateFechaNacimiento" placeholder="Fecha de Nacimiento">
+                    <input type="datetime-local" id="dateFechaNacimiento" placeholder="Fecha de Nacimiento" required >
                 </div>
                 <div class="form-group">
                     <label for="txtTelefono">Telefono:</label>
-                    <input type="tel" id="txtTelefono" placeholder="Telefono del Empleado">
+                    <input type="tel" id="txtTelefono" placeholder="Telefono del Empleado" required minlength="8" maxlength="8" pattern="^[0-9]{8}$"  title="Debe ingresar numeros positivos y sin signos">
                 </div>
                 <div class="form-group">
                     <label for="txtDireccion">Direccion:</label>
-                    <input type="text" id="txtDireccion" placeholder="Ubicacion del Empleado">
+                    <input type="text" id="txtDireccion" placeholder="Ubicacion del Empleado" required minlength="5" maxlength="25" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
                 </div>
                 <button type="submit" class="contrast">Guardar</button>
             </form>
@@ -131,31 +131,31 @@
                 <div class="form-group">
                     <input type="hidden" id="txtIdEditar">
                     <label for="IntRangoEditar">Rango:</label>
-                    <input type="number" id="IntRangoEditar" placeholder="Rango del Empleado" required>
+                    <input type="number" id="IntRangoEditar" placeholder="Rango del Empleado" required min="1"  max="8">
                 </div>
                 <div class="form-group">
                     <label for="txtNombreEditar">Nombre:</label>
-                    <input type="text" id="txtNombreEditar" placeholder="Nombres del Empleado">
+                    <input type="text" id="txtNombreEditar" placeholder="Nombres del Empleado" required minlength="3" maxlength="20"  pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtApellidoEditar">Apellido:</label>
-                    <input type="text" id="txtApellidoEditar" placeholder="Apellidos del Empleado">
+                    <input type="text" id="txtApellidoEditar" placeholder="Apellidos del Empleado" required minlength="3" maxlength="20"  pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtCorreoEditar">Correo:</label>
-                    <input type="email" id="txtCorreoEditar" placeholder="Correo del Empleado">
+                    <input type="email" id="txtCorreoEditar" placeholder="Correo del Empleado" required minlength="5" pattern="^[a-zA-Z0-9._]+@gmail\.com$" title="no puede incluir mas signos ademas de @ y debe tener @gmail y .com">
                 </div>
                 <div class="form-group">
                     <label for="dateFechaNacimientoEditar">Fecha de Nacimiento:</label>
-                    <input type="datetime-local" id="dateFechaNacimientoEditar" placeholder="Fecha de Nacimiento">
+                    <input type="datetime-local" id="dateFechaNacimientoEditar" placeholder="Fecha de Nacimiento" required>
                 </div>
                 <div class="form-group">
                     <label for="txtTelefonoEditar">Telefono:</label>
-                    <input type="tel" id="txtTelefonoEditar" placeholder="Telefono del Empleado">
+                    <input type="tel" id="txtTelefonoEditar" placeholder="Telefono del Empleado" required minlength="8" maxlength="8" pattern="^[0-9]{8}$"  title="Debe ingresar numeros positivos y sin signos">
                 </div>
                 <div class="form-group">
                     <label for="txtDireccionEditar">Ubicacion:</label>
-                    <input type="text" id="txtDireccionEditar" placeholder="Ubicacion del Empleado">
+                    <input type="text" id="txtDireccionEditar" placeholder="Ubicacion del Empleado" required minlength="5" maxlength="25" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
                 </div>
                 <button type="submit" class="contrast">Editar</button>
             </form>

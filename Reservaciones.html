@@ -87,23 +87,23 @@
             <form id="frmAgregar">
                 <div class="form-group">
                     <label for="txtCliente">Cliente</label>
-                    <input type="text" id="txtCliente" placeholder="Cliente" required>
+                    <input type="text" id="txtCliente" placeholder="Cliente" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtViaje">Viaje</label>
-                    <input type="text" id="txtViaje" placeholder="Viaje">
+                    <input type="text" id="txtViaje" placeholder="Viaje" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="dateFecha">Fecha</label>
-                    <input type="date" id="dateFecha" placeholder="Fecha">
+                    <input type="date" id="dateFecha" placeholder="Fecha" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPersonas">Personas</label>
-                    <input type="text" id="txtPersonas" placeholder="Personas">
+                    <input type="number" id="txtPersonas" placeholder="Personas" required min="1" max="12" >
                 </div>
                 <div class="form-group">
                     <label for="txtEstado">Estado</label>
-                    <input type="text" id="txtEstado" placeholder="Estado">
+                    <input type="text" id="txtEstado" placeholder="Estado" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <button type="submit" class="contrast">Guardar</button>
             </form>
@@ -121,23 +121,23 @@
                 <input type="hidden" id="txtIdEditar">
                 <div class="form-group">
                     <label for="txtClienteEditar">Cliente</label>
-                    <input type="text" id="txtClienteEditar" placeholder="Cliente" required>
+                    <input type="text" id="txtClienteEditar" placeholder="Cliente" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtViajeEditar">Viaje</label>
-                    <input type="text" id="txtViajeEditar" placeholder="Viaje">
+                    <input type="text" id="txtViajeEditar" placeholder="Viaje" minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="dateFechaEditar">Fecha</label>
-                    <input type="date" id="dateFechaEditar" placeholder="Fecha">
+                    <input type="date" id="dateFechaEditar" placeholder="Fecha" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPersonasEditar">Personas</label>
-                    <input type="text" id="txtPersonasEditar" placeholder="Personas">
+                    <input type="number" id="txtPersonasEditar" placeholder="Personas" required>
                 </div>
                 <div class="form-group">
                     <label for="txtEstadoEditar">Estado</label>
-                    <input type="text" id="txtEstadoEditar" placeholder="Estado">
+                    <input type="text" id="txtEstadoEditar" placeholder="Estado" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <button type="submit" class="contrast">Actualizar</button>
             </form>

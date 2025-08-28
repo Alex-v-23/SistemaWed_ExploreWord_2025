@@ -87,23 +87,23 @@
             <form id="frmAgregar">
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
-                    <input type="text" id="txtNombre" placeholder="Nombre" required>
+                    <input type="text" id="txtNombre" placeholder="Nombre" required  minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtApellido">Destino</label>
-                    <input type="text" id="txtDestino" placeholder="Destino">
+                    <input type="text" id="txtDestino" placeholder="Destino" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtEmail">Fecha</label>
-                    <input type="date" id="dateFecha" placeholder="Fecha">
+                    <input type="date" id="dateFecha" placeholder="Fecha" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPrecio">Precio</label>
-                    <input type="text" id="txtPrecio" placeholder="Precio">
+                    <input type="text" id="txtPrecio" placeholder="Precio" required pattern="^\d+\.\d{1,2}$"  title="Debe ser en decimales y debe tener un numero antes del punto">
                 </div>
                 <div class="form-group">
                     <label for="txtEmail">Estado</label>
-                    <input type="text" id="txtEstado" placeholder="Estado">
+                    <input type="text" id="txtEstado" placeholder="Estado" required minlength="5" maxlength="25" pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ\s.]+$" title="No mas signos ademas del punto">
                 </div>
                 <button type="submit" class="contrast">Guardar</button>
             </form>
@@ -121,23 +121,23 @@
                 <input type="hidden" id="txtIdEditar">
                 <div class="form-group">
                     <label for="txtNombreEditar">Nombre</label>
-                    <input type="text" id="txtNombreEditar" placeholder="Nombre" required>
+                    <input type="text" id="txtNombreEditar" placeholder="Nombre" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtDestinoEditar">Destino</label>
-                    <input type="text" id="txtDestinoEditar" placeholder="Destino">
+                    <input type="text" id="txtDestinoEditar" placeholder="Destino" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
                 </div>
                 <div class="form-group">
                     <label for="txtFechaEditar">Fecha</label>
-                    <input type="date" id="dateFechaEditar" placeholder="Fecha">
+                    <input type="date" id="dateFechaEditar" placeholder="Fecha" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPrecioEditar">Precio</label>
-                    <input type="text" id="txtPrecioEditar" placeholder="Precio">
+                    <input type="text" id="txtPrecioEditar" placeholder="Precio" required pattern="^\d+\.\d{1,2}$"  title="Debe ser en decimales y debe tener un numero antes del punto">
                 </div>
                 <div class="form-group">
                     <label for="txtEstadoEditar">Estado</label>
-                    <input type="text" id="txtEstadoEditar" placeholder="Estado">
+                    <input type="text" id="txtEstadoEditar" placeholder="Estado" required minlength="5" maxlength="25" pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ\s.]+$" title="No mas signos ademas del punto">
                 </div>
                 <button type="submit" class="contrast">Actualizar</button>
             </form>
