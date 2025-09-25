@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Empleados</title>
+    <link rel="stylesheet" href="css/EmpleadosAdmin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Bootstrap Icons para consistencia -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="contenedor-app">
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="titulo-menu">
+                <img src="img/Logo.png" class="TamañoImagen">
+                <span class="material-symbols-outlined">Explore world</span>
+            </div>
+
+            <a href="index.html">
+                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
+                <span class="texto-menu">Inicio</span>
+            </a>
+            <a href="viajes.html">
+                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
+                <span class="texto-menu">Viajes</span>
+            </a>
+            <a href="empleados.html">
+                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
+                <span class="texto-menu">Empleados</span>
+            </a>
+            <a href="destinos.html">
+                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
+                <span class="texto-menu">Destinos</span>
+            </a>
+            <a href="factura.html">
+                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
+                <span class="texto-menu">Factura</span>
+            </a>
+            <a href="reservaciones.html">
+                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
+                <span class="texto-menu">Reservaciones</span>
+            </a>
+            <a href="servicios.html">
+                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
+                <span class="texto-menu">Servicios</span>
+            </a>
+            <a href="login.html" id="btnCerrarSecion">
+                <span class="material-symbols-outlined"><img src="img/user-logout (5).png" alt=""></span>
+                <span class="texto-menu">Cerrar Sesión</span>
+            </a>
+        </div>
+
+        <div id="contenido-principal">
+            <header class="barra-superior">
+                <h1>Empleados</h1>
+            </header>
+
+            <main class="container">
+                <!-- Selector de registros por página -->
+                <div class="select-container">
+                    <label for="pageSize" class="form-label">Mostrar:</label>
+                    <select id="pageSize" class="form-select w-auto">
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+
+                <div class="tabla-scroll">
+                    <table id="tabla">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ID Rango</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Fecha Nacimiento</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Salario</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos se llenarán con JavaScript -->
+                            <tr>
+                                <td colspan="10">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                <nav>
+                    <ul class="pagination" id="pagination">
+                        <!-- Se llenará dinámicamente -->
+                    </ul>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para agregar -->
+    <dialog id="mdAgregar">
+        <article>
+            <header>
+                <a href="#" class="close" id="btnCerrar">&times;</a>
+                <h3>Ingresar nuevo empleado</h3>
+            </header>
+            <form id="frmAgregar">
+                <div class="form-group">
+                    <label for="txtIdRango">ID Rango</label>
+                    <input type="number" id="txtIdRango" placeholder="ID Rango" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtNombre">Nombre</label>
+                    <input type="text" id="txtNombre" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtApellido">Apellido</label>
+                    <input type="text" id="txtApellido" placeholder="Apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtEmail">Email</label>
+                    <input type="email" id="txtEmail" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="dateFechaNacimiento">Fecha Nacimiento</label>
+                    <input type="date" id="dateFechaNacimiento" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtTelefono">Teléfono</label>
+                    <input type="text" id="txtTelefono" placeholder="Teléfono">
+                </div>
+                <div class="form-group">
+                    <label for="txtDireccion">Dirección</label>
+                    <input type="text" id="txtDireccion" placeholder="Dirección">
+                </div>
+                <div class="form-group">
+                    <label for="txtSalario">Salario</label>
+                    <input type="number" id="txtSalario" placeholder="Salario" step="0.01" min="0">
+                </div>
+                <button type="submit" class="contrast">Guardar</button>
+            </form>
+        </article>
+    </dialog>
+
+    <!-- Modal para editar -->
+    <dialog id="mdEditar">
+        <article>
+            <header>
+                <a href="#" class="close" id="btnCerrarEditar">&times;</a>
+                <h3>Actualizar Información</h3>
+            </header>
+            <form id="frmEditar">
+                <input type="hidden" id="txtIdEditar">
+                <div class="form-group">
+                    <label for="txtIdRangoEditar">ID Rango</label>
+                    <input type="number" id="txtIdRangoEditar" placeholder="ID Rango" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtNombreEditar">Nombre</label>
+                    <input type="text" id="txtNombreEditar" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtApellidoEditar">Apellido</label>
+                    <input type="text" id="txtApellidoEditar" placeholder="Apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtEmailEditar">Email</label>
+                    <input type="email" id="txtEmailEditar" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="dateFechaNacimientoEditar">Fecha Nacimiento</label>
+                    <input type="date" id="dateFechaNacimientoEditar" required>
+                </div>
+                <div class="form-group">
+                    <label for="txtTelefonoEditar">Teléfono</label>
+                    <input type="text" id="txtTelefonoEditar" placeholder="Teléfono">
+                </div>
+                <div class="form-group">
+                    <label for="txtDireccionEditar">Dirección</label>
+                    <input type="text" id="txtDireccionEditar" placeholder="Dirección">
+                </div>
+                <div class="form-group">
+                    <label for="txtSalarioEditar">Salario</label>
+                    <input type="number" id="txtSalarioEditar" placeholder="Salario" step="0.01" min="0">
+                </div>
+                <button type="submit" class="contrast">Actualizar</button>
+            </form>
+        </article>
+    </dialog>
+
+    <!-- Botón flotante -->
+    <button class="add-button btn-agregar" id="btnAddEmpleado">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Incluir el script de controlador -->
+    <script src="js/Controllers/EmpleadosController.js"></script>
+</body>
+
+</html>

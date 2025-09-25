@@ -1,0 +1,405 @@
+/* --- ESTILOS PARA INDEX.HTML --- */
+
+/* Variables y Estilos Globales (Comunes) */
+:root {
+    --primary: #2c6e9b;
+    --secondary: #34b3b8;
+    --accent: #f39c12;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --text: #333;
+    --background: #f8f9fa;
+    --card-bg: #ffffff;
+    --header-height: 80px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    padding-top: var(--header-height);
+}
+
+/* Header y Navegación (Comunes) */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 15px 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: var(--header-height);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.logo i {
+    margin-right: 10px;
+    color: var(--accent);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+}
+
+.nav-icon {
+    margin-left: 15px;
+    cursor: pointer;
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: var(--accent);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.boton-menu-movil {
+    display: none;
+}
+
+/* --- ESTILOS ESPECÍFICOS DE INDEX.HTML --- */
+
+/* Ajuste del Carrusel */
+.carousel-custom {
+    max-height: 65vh;
+    overflow: hidden;
+}
+
+.carousel-custom .carousel-item img {
+    height: 65vh;
+    object-fit: cover;
+    object-position: center;
+}
+
+.carousel-caption-custom {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* Sección de Bienvenida */
+.seccion-bienvenida {
+    padding: 80px 5%;
+    background: white;
+    text-align: center;
+}
+
+.seccion-bienvenida h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+.seccion-bienvenida p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.caracteristicas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.caracteristica {
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.caracteristica i {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.caracteristica h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--dark);
+}
+
+/* Sección de Viajes */
+.seccion-viajes {
+    padding: 80px 5%;
+    background: #f8f9fa;
+}
+
+.titulo-seccion {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.grid-viajes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.card-viaje {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.card-viaje:hover {
+    transform: translateY(-10px);
+}
+
+.card-viaje img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-contenido {
+    padding: 25px;
+}
+
+.card-contenido h3 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: var(--dark);
+}
+
+.card-contenido p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.precio-viaje {
+    font-size: 1.4rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.info-viaje {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.info-viaje span {
+    display: flex;
+    align-items: center;
+}
+
+.info-viaje i {
+    margin-right: 5px;
+    color: var(--primary);
+}
+
+/* Botones y Etiquetas (Comunes) */
+.boton {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.boton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.etiqueta {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--accent);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+/* Modal Carrito (Común) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.cerrar-modal {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-titulo {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.total-carrito {
+    text-align: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.botones-carrito {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.boton-secundario {
+    background: #ccc;
+}
+
+/* Footer (Común) */
+footer {
+    background: var(--dark);
+    color: white;
+    padding: 70px 5% 30px;
+}
+
+.contenido-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.seccion-footer h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.seccion-footer p {
+    margin-bottom: 10px;
+}
+
+.seccion-footer a {
+    color: var(--light);
+    text-decoration: none;
+}
+
+.redes-sociales {
+    display: flex;
+    gap: 15px;
+}
+
+.redes-sociales a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.pie-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+}
+
+/* Media Queries para Móvil */
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+
+    /* Simplificado para el ejemplo, necesitarías JS para el menú hamburguesa */
+    .boton-menu-movil {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .grid-viajes {
+        grid-template-columns: 1fr;
+    }
+}

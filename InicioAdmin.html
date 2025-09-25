@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de turismo</title>
+    <link rel="stylesheet" href="css/InicioAdmin.css">
+    <!-- Incluir Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Incluir Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div id="contenedor-app">
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="titulo-menu">
+                <img src="img/Logo.png" class="TamañoImagen">
+                <span class="material-symbols-outlined">Explore world</span>
+            </div>
+
+            <a href="index.html">
+                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
+                <span class="texto-menu">Inicio</span>
+            </a>
+            <a href="viajes.html">
+                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
+                <span class="texto-menu">Viajes</span>
+            </a>
+            <a href="empleados.html">
+                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
+                <span class="texto-menu">Empleados</span>
+            </a>
+            <a href="destinos.html">
+                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
+                <span class="texto-menu">Destinos</span>
+            </a>
+            <a href="factura.html">
+                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
+                <span class="texto-menu">Factura</span>
+            </a>
+            <a href="reservaciones.html">
+                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
+                <span class="texto-menu">Reservaciones</span>
+            </a>
+            <a href="servicios.html">
+                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
+                <span class="texto-menu">Servicios</span>
+            </a>
+            <a href="login.html" id="btnCerrarSecion">
+                <span class="material-symbols-outlined"><img src="img/user-logout (5).png" alt=""></span>
+                <span class="texto-menu">Cerrar Sesión</span>
+            </a>
+        </div>
+
+        <div id="contenedor-app">
+            <!-- Contenido principal -->
+            <div id="contenido-principal">
+                <header class="barra-superior">
+                    <h1>Bienvenidos</h1>
+                </header>
+
+                <div class="dashboard-container">
+                    <!-- Métricas principales con iconos -->
+                    <div class="dashboard-grid">
+
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-route"></i>
+                            <h2>Viajes activos</h2>
+                            <div class="valor">24</div>
+                            <div class="variacion positivo">+12% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h2>Ingresos mensuales</h2>
+                            <div class="valor">$12,450</div>
+                            <div class="variacion negativo">-5% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-user-plus"></i>
+                            <h2>Clientes nuevos</h2>
+                            <div class="valor">18</div>
+                            <div class="variacion positivo">+20% vs mes pasado</div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h2>Reservaciones</h2>
+                            <div class="valor">32</div>
+                            <div class="variacion positivo">+8% vs mes pasado</div>
+                        </div>
+                    </div>
+
+                    <!-- Secciones inferiores -->
+                    <div class="dashboard-secciones">
+                        <div class="seccion-graficos">
+                            <!-- Gráfico circular -->
+                            <div class="contenedor-grafico-circular">
+                                <h2>Destinos</h2>
+                                <canvas class="grafico-circular" id="graficoCircularDestinos"></canvas>
+                            </div>
+
+                            <!-- Gráfico de ingresos -->
+                            <div class="contenedor-grafico-lineal">
+                                <h2>Ingresos mensuales</h2>
+                                <canvas id="grafico-ingresos"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <script src="js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,651 @@
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+          background-color: #f5f7fa;
+          color: #333;
+          height: 100vh;
+          display: flex;
+      }
+
+      /* Añadir al inicio del archivo Admin.css */
+      :root {
+          --sidebar-width: 99px;
+          --sidebar-expanded: 250px;
+          --header-height: 60px;
+          --card-padding: 15px;
+      }
+
+      /* Media Queries comunes */
+      @media (max-width: 1200px) {
+          .dashboard-grid {
+              grid-template-columns: repeat(2, 1fr);
+          }
+
+          .seccion-graficos {
+              flex-direction: column;
+              height: auto;
+          }
+
+          .contenedor-grafico-circular,
+          .contenedor-grafico-lineal {
+              min-width: 100%;
+              margin-bottom: 20px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .dashboard-grid {
+              grid-template-columns: 1fr;
+          }
+
+          .dashboard-card {
+              padding: var(--card-padding);
+          }
+
+          .container,
+          .card2 {
+              width: 95%;
+              padding: 15px;
+          }
+
+          .cards {
+              flex-direction: column;
+              align-items: center;
+          }
+
+          .card,
+          .card-2 {
+              width: 100%;
+              max-width: none;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .menu-lateral {
+              width: 60px;
+          }
+
+          .menu-lateral:hover {
+              width: 200px;
+          }
+
+          .menu-lateral a {
+              padding: 10px 15px;
+          }
+
+          .menu-lateral .titulo-menu img {
+              width: 40px;
+              height: 40px;
+          }
+
+          .barra-superior h1 {
+              font-size: 18px;
+          }
+      }
+
+      /* -------------------- Menú Lateral (Sidebar) -------------------- */
+      .menu-lateral {
+          width: 99px;
+          /* Ancho inicial del menú: solo muestra los íconos */
+          position: relative;
+          z-index: 100;
+          background-color: #1E40AF;
+          /* Color de fondo oscuro */
+          overflow-x: hidden;
+          /* Oculta cualquier contenido (como el texto) que exceda el ancho del menú */
+          transition: width 0.5s ease;
+          /* Transición suave cuando el ancho del menú cambia (abre/cierra) */
+          box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+          /* Sombra a la derecha del menú */
+          flex-shrink: 0;
+          /* Evita que el menú se encoja si el espacio es limitado */
+          display: flex;
+          flex-direction: column;
+          padding-top: 10px;
+          /* Espacio superior dentro del menú */
+      }
+
+      /* Efecto al pasar el mouse sobre el menú lateral para expandirlo */
+      .menu-lateral:hover {
+          width: 250px;
+          /* El menú se expande a un ancho mayor */
+      }
+
+      /* Título y logo dentro del menú lateral */
+      .menu-lateral .titulo-menu {
+          display: flex;
+          align-items: center;
+          padding: 15px 20px;
+          /* Espaciado interno */
+          color: #ecf0f1;
+          font-size: 1.25rem;
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          /* Oculta el texto del título cuando el menú está cerrado */
+          transition: all 0.5s ease;
+          margin-bottom: 5px;
+          /* Espacio debajo del título antes de los ítems del menú */
+      }
+
+      .menu-lateral .titulo-menu img {
+          /* Estilo para el logo en el título */
+          width: 60px;
+          /* Tamaño del logo ajustado */
+          height: 60px;
+          /* Altura del logo ajustada */
+          border-radius: 50%;
+          /* Para que sea circular */
+          margin-right: 18px;
+          /* Espacio a la derecha del logo */
+          object-fit: cover;
+          flex-shrink: 0;
+          /* Evita que la imagen se encoja */
+      }
+
+      /* El texto del título del menú ('Turismo SV') */
+      .menu-lateral .texto-menu-titulo {
+          opacity: 0;
+          /* Oculto por defecto (cuando el menú está cerrado) */
+          transition: opacity 0.4s ease-in-out;
+          /* Transición suave para la opacidad */
+          pointer-events: none;
+          /* No permite interacción con el texto invisible */
+          flex-shrink: 0;
+          /* Evita que el texto se encoja */
+      }
+
+      /* Mostrar el texto del título cuando el menú está abierto por hover */
+      .menu-lateral:hover .texto-menu-titulo {
+          opacity: 1;
+          /* El texto del título es completamente visible */
+          pointer-events: auto;
+          /* Permite la interacción */
+      }
+
+      /* Estilos de los enlaces (ítems) dentro del menú */
+      .menu-lateral a {
+          padding: 12px 30px;
+          /* Espaciado interno para cada ítem del menú */
+          text-decoration: none;
+          font-size: 14px;
+          /* Tamaño de fuente para el texto de los ítems */
+          color: #ecf0f1;
+          display: flex;
+          align-items: center;
+          white-space: nowrap;
+          transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease, border-left 0.3s ease;
+          overflow: hidden;
+          /* Oculta cualquier texto que se desborde del ancho actual del menú */
+          min-height: 12px;
+          /* Altura mínima para cada ítem, basado en el tamaño del ícono */
+      }
+
+      /* Estilos para las imágenes de los íconos dentro de los enlaces */
+      .menu-lateral a img {
+          width: 28px;
+          /* Tamaño de los íconos */
+          height: 28px;
+          /* Altura de los íconos */
+          margin-right: 15px;
+          /* Espacio entre el ícono y el texto cuando el menú está abierto */
+          object-fit: contain;
+          flex-shrink: 0;
+          /* Evita que la imagen se encoja */
+          transition: margin-right 0.3s ease;
+          /* Transición para el margen del ícono */
+      }
+
+      /* Cuando el menú está cerrado (no tiene :hover), el ícono no tiene margen a la derecha */
+      .menu-lateral:not(:hover) a img {
+          margin-right: 0;
+      }
+
+      /* Efecto visual al pasar el ratón por los enlaces del menú */
+      .menu-lateral a:hover {
+          background-color: #95bce5;
+          /* Fondo al pasar el ratón */
+          color: #ffffff;
+          /* Texto blanco al pasar el ratón */
+          border-left: 5px solid #3b3b3b;
+          /* Pequeña barra azul a la izquierda */
+          padding-left: 15px;
+          /* Ajusta el padding para que el texto no se pegue al borde */
+      }
+
+      /* Estilos para el texto de cada opción del menú */
+      .menu-lateral .texto-menu {
+          opacity: 0;
+          /* Por defecto, el texto es invisible (menú cerrado) */
+          transition: opacity 0.4s ease-in-out;
+          /* Transición para que el texto aparezca/desaparezca suavemente */
+          pointer-events: none;
+          /* Asegura que no se pueda interactuar con el texto invisible */
+          flex-grow: 1;
+          /* Permite que el texto ocupe el espacio restante cuando visible */
+      }
+
+      /* Mostrar el texto de las opciones cuando el menú está abierto por hover */
+      .menu-lateral:hover .texto-menu {
+          opacity: 1;
+          /* El texto de las opciones es completamente visible */
+          pointer-events: auto;
+          /* Permite la interacción con el texto */
+      }
+
+      .TamañoImagen {
+          margin-right: 0;
+      }
+
+
+      /* -----------------Estilos específicos del dashboard ----------------------*/
+
+      /* Contenedor principal */
+      #contenedor-app {
+          display: flex;
+          width: 100%;
+          height: 100%;
+      }
+
+
+      /* Contenido principal */
+      #contenido-principal {
+          flex-grow: 1;
+          overflow-y: auto;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+      }
+
+      .barra-superior {
+          background-color: #E9EBEE;
+          padding: 15px 25px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .barra-superior h1 {
+          color: #2c3e50;
+          font-size: 24px;
+      }
+
+      /* -------------------------Dashboard ---------------------------------------*/
+      .dashboard-container {
+          padding: 25px;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+      }
+
+      .dashboard-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          margin-bottom: 30px;
+      }
+
+      .dashboard-card {
+          background-color: white;
+          border-radius: 10px;
+          padding: 25px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .dashboard-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .dashboard-card h2 {
+          font-size: 16px;
+          color: #7f8c8d;
+          margin-bottom: 15px;
+      }
+
+      .dashboard-card .valor {
+          font-size: 32px;
+          font-weight: bold;
+          color: #2c3e50;
+          margin-bottom: 5px;
+      }
+
+      .dashboard-card .variacion {
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+      }
+
+      .variacion.positivo {
+          color: #27ae60;
+      }
+
+      .variacion.negativo {
+          color: #e74c3c;
+      }
+
+      /*Estilos para las secciones*/
+      .dashboard-secciones {
+          width: 100%;
+          margin-top: 30px;
+      }
+
+      .seccion-graficos {
+          display: flex;
+          gap: 30px;
+          align-items: center;
+          /* Cambiado de flex-start a center */
+          height: 400px;
+          /* Altura fija para contenedor */
+      }
+
+      /* --------------------Contenedor gráfico circular -------------------------- */
+
+      .contenedor-grafico-circular {
+          flex: 1;
+          background-color: white;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          min-width: 300px;
+      }
+
+      /* Contenedor gráfico lineal */
+      .contenedor-grafico-lineal {
+          flex: 2;
+          background-color: white;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          min-width: 400px;
+      }
+
+      /* Títulos */
+      .dashboard-seccion h2 {
+          font-size: 18px;
+          color: #2c3e50;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eee;
+          text-align: center;
+      }
+
+      /* Gráficos */
+      .grafico-circular {
+          width: 100% !important;
+          height: auto !important;
+          max-height: 300px;
+          /* Altura máxima */
+          margin: 0 auto;
+      }
+
+      #grafico-ingresos {
+          width: 100% !important;
+          height: 100% !important;
+          /* Ocupa toda la altura disponible */
+          min-height: 300px;
+      }
+
+      .contenedor-grafico-circular,
+      .contenedor-grafico-lineal {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          /* Centrado vertical interno */
+          height: 100%;
+          /* Ocupa toda la altura del contenedor padre */
+      }
+
+      /*----------------------------------------------------------------------------*/
+      /* Contenedor principal */
+      .container {
+          width: 97%;
+          max-width: 1800px;
+          margin: 30px auto;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          background-color: white;
+          border-radius: 15px;
+          padding: 10px;
+      }
+
+      .container h2 {
+          margin-left: 30px;
+          font-size: 26px;
+          margin-top: 20px;
+          margin-bottom: 30px;
+          color: #2c3e50;
+      }
+
+      /* Tarjetas de destinos */
+      .cards {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+      }
+
+      .card,
+      .card-2 {
+          width: 70%;
+          max-width: 300px;
+          border: none;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          border-radius: 15px;
+          background-color: white;
+          transition: transform 0.3s ease;
+      }
+
+      .card:hover,
+      .card-2:hover {
+          transform: translateY(-5px);
+      }
+
+      .card h2,
+      .card-2 h2 {
+          margin: 20px;
+          color: rgb(46, 65, 189);
+          font-size: 22px;
+      }
+
+      .card img,
+      .card-2 img {
+          width: 97%;
+          height: 200px;
+          display: block;
+          margin: 0 auto;
+          border-radius: 10px;
+          object-fit: cover;
+      }
+
+      .contenido {
+          margin: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+      }
+
+      .item {
+          display: flex;
+          align-items: center;
+      }
+
+      .item i {
+          margin-right: 10px;
+          color: rgb(46, 65, 189);
+      }
+
+      .Info {
+          margin: 20px;
+          padding-top: 15px;
+          border-top: 1px dashed #ddd;
+      }
+
+      .Info p {
+          color: #555;
+          line-height: 1.5;
+      }
+
+      /* Sección "Por qué visitar" */
+      .card2 {
+          width: 97%;
+          max-width: 1800px;
+          margin: 5px auto;
+          background-color: white;
+          padding: 30px;
+          font-size: 18px;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          border-radius: 15px;
+          margin-bottom: 50px;
+      }
+
+      .card2 h2 {
+          margin-left: 20px;
+          color: rgb(46, 65, 189);
+          font-size: 26px;
+      }
+
+      .card2 p {
+          margin-left: 20px;
+          color: #555;
+          line-height: 1.6;
+      }
+
+      .card2 ul {
+          margin-left: 40px;
+          list-style-type: none;
+      }
+
+      .card2 li {
+          padding: 8px 0;
+          color: #555;
+          display: flex;
+          align-items: center;
+      }
+
+      .card2 li i {
+          margin-right: 10px;
+          color: rgb(46, 65, 189);
+      }
+
+      /* DISEÑO RESPONSIVO */
+      @media (max-width: 768px) {
+          .responsive-table {
+              display: block;
+          }
+
+          .responsive-table thead {
+              display: none;
+          }
+
+          .responsive-table tr {
+              display: block;
+              margin-bottom: 15px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              padding: 10px;
+          }
+
+          .responsive-table td {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 8px 10px;
+              border-bottom: 1px solid #eee;
+              text-align: right;
+          }
+
+          .responsive-table td::before {
+              content: attr(data-label);
+              font-weight: bold;
+              margin-right: auto;
+              text-align: left;
+              padding-right: 20px;
+          }
+
+          .actions {
+              justify-content: flex-end;
+          }
+
+          .btn-text {
+              display: none;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .btn-action {
+              padding: 6px;
+              font-size: 12px;
+          }
+
+          .btn-action i {
+              margin-right: 0;
+          }
+      }
+
+      @media (max-width: 1200px) {
+
+          table th,
+          table td {
+              padding: 8px 10px;
+              font-size: 0.8em;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .tabla-scroll {
+              overflow-x: auto;
+              display: block;
+          }
+
+          table {
+              width: max-content;
+          }
+
+          .container {
+              padding: 10px;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .add-button {
+              width: 50px;
+              height: 50px;
+              font-size: 20px;
+              bottom: 20px;
+              right: 20px;
+          }
+
+          dialog {
+              width: 95%;
+          }
+      }
+
+      @media screen and (max-width: 600px) {
+          table {
+              width: 100%;
+          }
+
+          td {
+              display: block;
+              text-align: right;
+              padding-left: 50%;
+              position: relative;
+          }
+
+          td::before {
+              content: attr(data-label);
+              position: absolute;
+              left: 10px;
+              font-weight: bold;
+          }
+
+          th {
+              display: none;
+          }
+      }

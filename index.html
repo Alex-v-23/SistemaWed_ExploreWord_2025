@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Word - Turismo de Buses</title>
+    <link rel="stylesheet" href="css/carrito.css">
+    <link rel="stylesheet" href="css/Index.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">
+            <i class="fas fa-bus"></i>
+            <span>Explore Word</span>
+        </div>
+        
+        <button class="boton-menu-movil" id="boton-menu-movil">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav>
+            <ul id="menu-navegacion">
+                <li><a href="Index.html" class="enlace-navegacion activa">Inicio</a></li>
+                <li><a href="Destinos.html" class="enlace-navegacion">Destinos</a></li>
+                <li><a href="nosotros.html" class="enlace-navegacion">Nosotros</a></li>
+                <li><a href="contacto.html" class="enlace-navegacion">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <div class="nav-icon" id="icono-carrito">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <div class="nav-icon" id="icono-usuario">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Carrusel Bootstrap -->
+    <div id="carouselExample" class="carousel slide carousel-custom" data-bs-ride="carousel" data-bs-interval="4000">
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        
+        <!-- Contenido del carrusel -->
+        <div class="carousel-inner">
+            <!-- Primera diapositiva -->
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" class="d-block w-100" alt="Viaje en bus">
+                <div class="carousel-caption carousel-caption-custom">
+                    <h3>Explora El Salvador</h3>
+                    <p>Descubre la belleza de nuestro país con la comodidad de nuestros buses.</p>
+                </div>
+            </div>
+            
+            <!-- Segunda diapositiva -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" class="d-block w-100" alt="Aventuras">
+                <div class="carousel-caption carousel-caption-custom">
+                    <h3>Aventuras por Carretera</h3>
+                    <p>Recorre los paisajes más impresionantes de El Salvador.</p>
+                </div>
+            </div>
+            
+            <!-- Tercera diapositiva -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" class="d-block w-100" alt="Ciudades">
+                <div class="carousel-caption carousel-caption-custom">
+                    <h3>Conectando Destinos</h3>
+                    <p>Llegamos a todos los rincones de El Salvador con horarios flexibles.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- Sección de Bienvenida -->
+    <section class="seccion-bienvenida">
+        <div class="container">
+            <h2>Bienvenido a Explore Word Turismo</h2>
+            <p>Tu compañía de confianza para viajes en bus por todo El Salvador. Ofrecemos comodidad, seguridad y los mejores precios del mercado.</p>
+            
+            <div class="caracteristicas">
+                <div class="caracteristica">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Seguridad Garantizada</h3>
+                    <p>Buses modernos con todos los estándares de seguridad para tu tranquilidad.</p>
+                </div>
+                <div class="caracteristica">
+                    <i class="fas fa-couch"></i>
+                    <h3>Máxima Comodidad</h3>
+                    <p>Asientos ergonómicos, aire acondicionado y servicio a bordo.</p>
+                </div>
+                <div class="caracteristica">
+                    <i class="fas fa-route"></i>
+                    <h3>+30 Destinos</h3>
+                    <p>Conexión entre las principales ciudades y pueblos de El Salvador.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Viajes en El Salvador -->
+    <section class="seccion-viajes">
+        <div class="container">
+            <h2 class="titulo-seccion">Viajes por El Salvador</h2>
+            <p class="text-center mb-5" style="font-size: 1.2rem; color: #666;">Descubre los destinos más populares dentro de nuestro país</p>
+            
+            <div class="grid-viajes">
+                <!-- Viaje 1 -->
+                <div class="card-viaje">
+                    <div class="etiqueta">Popular</div>
+                    <img src="https://images.unsplash.com/photo-1580522154071-c6ca47a859ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="San Salvador - Santa Ana">
+                    <div class="card-contenido">
+                        <h3>San Salvador - Santa Ana</h3>
+                        <p>Viaje directo entre las dos ciudades más importantes del país. Disfruta del paisaje montañoso.</p>
+                        <div class="precio-viaje">$8.50</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 1.5 horas</span>
+                            <span><i class="fas fa-chair"></i> Asiento semi-cama</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="1" data-nombre="San Salvador - Santa Ana" data-precio="8.50">Reservar Ahora</button>
+                    </div>
+                </div>
+
+                <!-- Viaje 2 -->
+                <div class="card-viaje">
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="San Miguel - La Unión">
+                    <div class="card-contenido">
+                        <h3>San Miguel - La Unión</h3>
+                        <p>Ruta hacia la costa oriental con paradas en los principales pueblos del camino.</p>
+                        <div class="precio-viaje">$12.00</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 2.5 horas</span>
+                            <span><i class="fas fa-tv"></i> WiFi gratis</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="2" data-nombre="San Miguel - La Unión" data-precio="12.00">Reservar Ahora</button>
+                    </div>
+                </div>
+
+                <!-- Viaje 3 -->
+                <div class="card-viaje">
+                    <div class="etiqueta">Nuevo</div>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ruta de las Flores">
+                    <div class="card-contenido">
+                        <h3>Ruta de las Flores</h3>
+                        <p>Tour panorámico por los pueblos coloridos de la cordillera Apaneca-Ilamatepec.</p>
+                        <div class="precio-viaje">$25.00</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 6 horas</span>
+                            <span><i class="fas fa-camera"></i> Paradas turísticas</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="3" data-nombre="Ruta de las Flores" data-precio="25.00">Reservar Ahora</button>
+                    </div>
+                </div>
+
+                <!-- Viaje 4 -->
+                <div class="card-viaje">
+                    <img src="https://images.unsplash.com/photo-1576675466969-38eeae4b41f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Playa El Tunco">
+                    <div class="card-contenido">
+                        <h3>San Salvador - Playa El Tunco</h3>
+                        <p>Directo a la playa más famosa para surfistas. Ideal para un fin de semana.</p>
+                        <div class="precio-viaje">$6.00</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 45 minutos</span>
+                            <span><i class="fas fa-umbrella-beach"></i> Playa</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="4" data-nombre="San Salvador - Playa El Tunco" data-precio="6.00">Reservar Ahora</button>
+                    </div>
+                </div>
+
+                <!-- Viaje 5 -->
+                <div class="card-viaje">
+                    <div class="etiqueta">Económico</div>
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Suchitoto">
+                    <div class="card-contenido">
+                        <h3>San Salvador - Suchitoto</h3>
+                        <p>Viaje cultural al pueblo colonial junto al Lago Suchitlán. Arquitectura y artesanías.</p>
+                        <div class="precio-viaje">$7.50</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 1.5 horas</span>
+                            <span><i class="fas fa-landmark"></i> Cultural</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="5" data-nombre="San Salvador - Suchitoto" data-precio="7.50">Reservar Ahora</button>
+                    </div>
+                </div>
+
+                <!-- Viaje 6 -->
+                <div class="card-viaje">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Volcán Ilamatepec">
+                    <div class="card-contenido">
+                        <h3>Tour Volcán Ilamatepec</h3>
+                        <p>Excursión al volcán más alto de El Salvador. Incluye guía y equipo básico.</p>
+                        <div class="precio-viaje">$35.00</div>
+                        <div class="info-viaje">
+                            <span><i class="fas fa-clock"></i> 8 horas</span>
+                            <span><i class="fas fa-mountain"></i> Aventura</span>
+                        </div>
+                        <button class="boton agregar-carrito" data-id="6" data-nombre="Tour Volcán Ilamatepec" data-precio="35.00">Reservar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Carrito -->
+    <div class="modal" id="modal-carrito">
+        <div class="modal-contenido">
+            <button class="cerrar-modal" id="cerrar-carrito">&times;</button>
+            <h2 class="modal-titulo">Tu Carrito de Viajes</h2>
+            <div id="contenido-carrito">
+                <!-- Los elementos del carrito se insertarán aquí -->
+            </div>
+            <div class="total-carrito">
+                <span>Total:</span>
+                <span id="total-carrito">$0.00</span>
+            </div>
+            <div class="botones-carrito">
+                <button class="boton boton-secundario" id="vaciar-carrito">Vaciar Carrito</button>
+                <button class="boton" id="proceder-pago">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contenido-footer">
+            <div class="seccion-footer">
+                <h3>Explore Word Turismo</h3>
+                <p>Conectando destinos con calidad y confianza desde 2010. Tu viaje perfecto comienza con nosotros.</p>
+            </div>
+            
+            <div class="seccion-footer">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="destinos.html">Destinos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+            </div>
+            
+            <div class="seccion-footer">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Transporte 456, San Salvador</p>
+                <p><i class="fas fa-phone"></i> +503 2345 6789</p>
+                <p><i class="fas fa-envelope"></i> info@exploreword.com</p>
+            </div>
+            
+            <div class="seccion-footer">
+                <h3>Síguenos</h3>
+                <div class="redes-sociales">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-footer">
+            <p>&copy; 2023 Explore Word Turismo. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para el carrito y funcionalidades -->
+    <script src="js/carrito.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

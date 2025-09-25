@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/FacturaAdmin.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Servicios -- Explore World</title>
+</head>
+
+<body>
+    <div id="contenedor-app">
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="titulo-menu">
+                <img src="img/Logo.png" class="TamañoImagen">
+                <span class="material-symbols-outlined">Explore world</span>
+            </div>
+
+            <a href="index.html">
+                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
+                <span class="texto-menu">Inicio</span>
+            </a>
+            <a href="viajes.html">
+                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
+                <span class="texto-menu">Viajes</span>
+            </a>
+            <a href="empleados.html">
+                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
+                <span class="texto-menu">Empleados</span>
+            </a>
+            <a href="destinos.html">
+                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
+                <span class="texto-menu">Destinos</span>
+            </a>
+            <a href="factura.html">
+                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
+                <span class="texto-menu">Factura</span>
+            </a>
+            <a href="reservaciones.html">
+                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
+                <span class="texto-menu">Reservaciones</span>
+            </a>
+            <a href="servicios.html">
+                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
+                <span class="texto-menu">Servicios</span>
+            </a>
+            <a href="login.html" id="btnCerrarSecion">
+                <span class="material-symbols-outlined"><img src="img/user-logout (5).png" alt=""></span>
+                <span class="texto-menu">Cerrar Sesión</span>
+            </a>
+        </div>
+    </div>
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-blue-800">Explore World</h1>
+            <p class="text-gray-600">Sistema de Facturación de Viajes</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Formulario para añadir/editar viajes -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-blue-800">Gestión de Viajes</h2>
+                <form id="travelForm" class="space-y-4">
+                    <input type="hidden" id="travelId">
+
+                    <div>
+                        <label for="customerId" class="block text-sm font-medium text-gray-700 required">ID del
+                            Cliente</label>
+                        <input type="text" id="customerId" name="customerId"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                        <p class="error-message" id="customerIdError">Este campo es obligatorio</p>
+                    </div>
+
+                    <div>
+                        <label for="hotelId" class="block text-sm font-medium text-gray-700 required">ID del
+                            Hotel</label>
+                        <input type="number" id="hotelId" name="hotelId" min="1"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                        <p class="error-message" id="hotelIdError">Debe ser un número mayor o igual a 1</p>
+                    </div>
+
+                    <div>
+                        <label for="destination" class="block text-sm font-medium text-gray-700 required">Destino (El
+                            Salvador)</label>
+                        <select id="destination" name="destination"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                            <option value="" disabled selected>Seleccione un destino</option>
+                            <option value="San Salvador">San Salvador</option>
+                            <option value="Santa Ana">Santa Ana</option>
+                            <option value="San Miguel">San Miguel</option>
+                            <option value="La Libertad">La Libertad</option>
+                            <option value="Sonsonate">Sonsonate</option>
+                            <option value="Usulután">Usulután</option>
+                            <option value="Ahuachapán">Ahuachapán</option>
+                            <option value="Cuscatlán">Cuscatlán</option>
+                            <option value="Morazán">Morazán</option>
+                            <option value="Chalatenango">Chalatenango</option>
+                        </select>
+                        <p class="error-message" id="destinationError">Seleccione un destino</p>
+                    </div>
+
+                    <div>
+                        <label for="tripType" class="block text-sm font-medium text-gray-700 required">Tipo de
+                            Viaje</label>
+                        <select id="tripType" name="tripType"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                            <option value="" disabled selected>Seleccione tipo de viaje</option>
+                            <option value="Negocios">Negocios</option>
+                            <option value="Playa">Playa</option>
+                            <option value="Aventura">Aventura</option>
+                            <option value="Cultural">Cultural</option>
+                        </select>
+                        <p class="error-message" id="tripTypeError">Seleccione un tipo de viaje</p>
+                    </div>
+
+                    <div>
+                        <label for="duration" class="block text-sm font-medium text-gray-700 required">Duración
+                            (días)</label>
+                        <input type="number" id="duration" name="duration" min="1"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                        <p class="error-message" id="durationError">Debe ser al menos 1 día</p>
+                    </div>
+
+                    <div>
+                        <label for="total" class="block text-sm font-medium text-gray-700 required">Total ($)</label>
+                        <input type="number" id="total" name="total" min="1" step="0.01"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            required>
+                        <p class="error-message" id="totalError">El total debe ser mayor a 0</p>
+                    </div>
+
+                    <div class="flex space-x-4 pt-2">
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Guardar Viaje
+                        </button>
+                        <button type="button" id="resetButton"
+                            class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                            Limpiar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lista de viajes del cliente -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-blue-800">Viajes del Cliente</h2>
+                <div class="mb-4">
+                    <label for="searchCustomerId" class="block text-sm font-medium text-gray-700 mb-1">Buscar por ID de
+                        Cliente</label>
+                    <div class="flex">
+                        <input type="text" id="searchCustomerId"
+                            class="flex-grow rounded-l-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <button id="searchButton"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="customerTravels" class="overflow-auto max-h-96">
+                    <!-- Los viajes se cargarán aquí -->
+                    <p class="text-gray-500 italic">Ingrese un ID de cliente para ver sus viajes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección para ver factura -->
+        <div class="mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-blue-800">Factura</h2>
+                <button id="generateInvoiceBtn"
+                    class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-300"
+                    disabled>
+                    Generar Factura
+                </button>
+            </div>
+
+            <div id="invoiceContainer" class="invoice-container p-6 bg-white hidden">
+                <div class="text-right mb-6">
+                    <p class="text-xl font-bold">EXPLORE WORLD</p>
+                    <p class="text-sm text-gray-600">Factura #<span id="invoiceNumber">00001</span></p>
+                    <p class="text-sm text-gray-600"><span id="invoiceDate">01/01/2023</span></p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <h3 class="font-semibold mb-2">Cliente:</h3>
+                        <p id="invoiceCustomerId">ID: </p>
+                        <p id="invoiceCustomerName">Nombre: </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Detalles de Pago:</h3>
+                        <p>Método: Transferencia Bancaria</p>
+                        <p>Estado: <span class="font-semibold text-green-600">Pagado</span></p>
+                    </div>
+                </div>
+
+                <table class="invoice-table mb-6">
+                    <thead>
+                        <tr>
+                            <th>FECHA</th>
+                            <th>DESTINO</th>
+                            <th>TIPO</th>
+                            <th>HOTEL ID</th>
+                            <th>DÍAS</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceItems">
+                        <!-- Items de factura se cargarán aquí -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right font-semibold">Total:</td>
+                            <td id="invoiceTotal" class="font-semibold">$0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="text-center pt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-600">¡Gracias por su preferencia!</p>
+                    <p class="text-sm text-gray-600">Explore World - Viaje con nosotros</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/factura.js"></script>
+</body>
+
+</html>
