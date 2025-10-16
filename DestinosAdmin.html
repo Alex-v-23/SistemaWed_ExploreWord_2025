@@ -1,149 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
- 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Integrantes</title>
-    <link rel="stylesheet" href="css/DestinoAdmin.css">
+    <title>Gestión de Destinos - Explore World</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="CSS/DestinosAdmin.css">
 </head>
- 
 <body>
-    <div id="contenedor-app">
-        <div id="menu-lateral" class="menu-lateral">
-            <div class="titulo-menu">
-                <img src="img/Logo.png" class="TamañoImagen">
-                <span class="material-symbols-outlined">Explore world</span>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
             </div>
-            <a href="index.html">
-                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
-                <span class="texto-menu">Inicio</span>
-            </a>
-            <a href="viajes.html">
-                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
-                <span class="texto-menu">Viajes</span>
-            </a>
-            <a href="empleados.html">
-                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
-                <span class="texto-menu">Empleados</span>
-            </a>
-            <a href="destinos.html">
-                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
-                <span class="texto-menu">Destinos</span>
-            </a>
-            <a href="factura.html">
-                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
-                <span class="texto-menu">Factura</span>
-            </a>
-            <a href="reservaciones.html">
-                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
-                <span class="texto-menu">Reservaciones</span>
-            </a>
-            <a href="servicios.html">
-                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
-                <span class="texto-menu">Servicios</span>
-            </a>
-            <a href="login.html" id="btnCerrarSecion">
-                <span class="material-symbols-outlined"><img src="img/user-logout (5).png" alt=""></span>
-                <span class="texto-menu">Cerrar Sesión</span>
-            </a>
+            <div class="logo-text">Explore World</div>
         </div>
- 
-        <div id="contenido-principal">
-            <header class="barra-superior">
-                <h1>Destinos</h1>
-            </header>
- 
-            <main class="container">
-                <div class="tabla-scroll">
-                    <h3>Destinos Disponibles</h3>
-                    <table id="tabla">
+        <ul class="menu">
+            <li>
+                <a href="InicioAdmin.html">
+                    <i class="fas fa-home"></i>
+                    <span class="menu-text">Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="ViajesAdmin.html">
+                    <i class="fas fa-route"></i>
+                    <span class="menu-text">Viajes</span>
+                </a>
+            </li>
+            <li>
+                <a href="EmpleadoAdmin.html">
+                    <i class="fas fa-users"></i>
+                    <span class="menu-text">Empleados</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="DestinosAdmin.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span class="menu-text">Destinos</span>
+                </a>
+            </li>
+            <li>
+                <a href="FacturaAdmin.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span class="menu-text">Factura</span>
+                </a>
+            </li>
+            <li>
+                <a href="ReservacionesAdmin.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span class="menu-text">Reservaciones</span>
+                </a>
+            </li>
+            <li>
+                <a href="ClientesAdmin.html">
+                    <i class="fas fa-user-friends"></i>
+                    <span class="menu-text">Clientes</span>
+                </a>
+            </li>
+            <li class="btn-logout" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">Cerrar Sesión</span>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <nav class="navbar">
+            <h1 class="navbar-title">GESTIÓN DE DESTINOS</h1>
+            <div class="navbar-right">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput" onkeyup="filtrarDestinos()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Admin User</div>
+                        <div class="user-role" id="userRole">Administrador</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="dashboard-content">
+            <div class="container">
+                <div class="controls">
+                    <div>
+                        <label for="pageSize">Mostrar:</label>
+                        <select id="pageSize" onchange="cambiarTamañoPagina()">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Lugar</th>
                                 <th>Tipo</th>
-                                <th>Descripcion</th>
+                                <th>Descripción</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Datos se llenarán con JavaScript -->
+                        <tbody id="tablaBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px;">
+                                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary);"></i>
+                                    <p style="margin-top: 10px;">Cargando destinos...</p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-            </main>
+
+                <div class="pagination" id="pagination"></div>
+            </div>
         </div>
     </div>
- 
-    <!-- Modal para agregar -->
-    <dialog id="mdAgregar">
-        <article>
-            <header>
-                <a href="#" class="close" id="btnCerrar">&times;</a>
-                <h3>Ingresar Destino</h3>
-            </header>
-            <form id="frmAgregar">
-                <div class="form-group">
-                    <label for="txtNombre">Nombre:</label>
-                    <input type="text" id="txtNombre" placeholder="Nombre Destino" required minlength="5" maxlength="20" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
-                </div>
-                <div class="form-group">
-                    <label for="txtLugar">Lugar:</label>
-                    <input type="text" id="txtLugar" placeholder="Lugar" required minlength="5" maxlength="20" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
-                </div>
-                <div class="form-group">
-                    <label for="txtTipo">Tipo:</label>
-                    <input type="text" id="txtTipo" placeholder="Tipo" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
-                </div>
-                <div class="form-group">
-                    <label for="txtDescripcion">Descripcion:</label>
-                    <input type="text" id="txtDescripcion" placeholder="Descripcion">
-                </div>
-                <button type="submit" class="contrast">Guardar</button>
-            </form>
-        </article>
-    </dialog>
- 
-    <!-- Modal para editar -->
-    <dialog id="mdEditar">
-        <article>
-            <header>
-                <a href="#" class="close" id="btnCerrarEditar">&times;</a>
-                <h3>Actualizar Información</h3>
-            </header>
-            <form id="frmEditar">
-                <input type="hidden" id="txtIdEditar">
-                <div class="form-group">
-                    <label for="txtNombreEditar">Nombre:</label>
-                    <input type="text" id="txtNombreEditar" placeholder="Nombre" required minlength="5" maxlength="20" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
-                </div>
-                <div class="form-group">
-                    <label for="txtLugarEditar">Lugar:</label>
-                    <input type="text" id="txtLugarEditar" placeholder="Lugar" required minlength="5" maxlength="20" pattern="^[a-zA-Z0-9\s.]+$" title="No mas signos ademas del punto">
-                </div>
-                <div class="form-group">
-                    <label for="txtTipoEditar">Tipo:</label>
-                    <input type="text" id="txtTipoEditar" placeholder="Tipo" required minlength="5" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"  title="solo letras">
-                </div>
-                <div class="form-group">
-                    <label for="txtDescripcionEditar">Descripcion:</label>
-                    <input type="text" id="txtDescripcionEditar" placeholder="Descripcion">
-                </div>
-                <button type="submit" class="contrast">Actualizar</button>
-            </form>
-        </article>
-    </dialog>
- 
-    <!-- Botón flotante -->
-    <button id="BtnAgregar" class="add-button">
+
+    <button class="btn-add" onclick="abrirModalAgregar()">
         <i class="fas fa-plus"></i>
     </button>
- 
-    <script src="js/destinos.js"></script>
+
+    <dialog id="mdAgregar">
+        <div class="modal-header">
+            <h3>Agregar Nuevo Destino</h3>
+            <button class="close-btn" onclick="cerrarModalAgregar()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="frmAgregar" onsubmit="agregarDestino(event)">
+                <div class="form-group">
+                    <label>Nombre del Destino</label>
+                    <input type="text" id="txtNombreDestino" required>
+                </div>
+                <div class="form-group">
+                    <label>Lugar</label>
+                    <input type="text" id="txtLugarDestino" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Destino</label>
+                    <select id="txtTipoDestino" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Playa">Playa</option>
+                        <option value="Montaña">Montaña</option>
+                        <option value="Ciudad">Ciudad</option>
+                        <option value="Histórico">Histórico</option>
+                        <option value="Natural">Natural</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Relax">Relax</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="txtDescripcionDestino" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Guardar Destino</button>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="mdEditar">
+        <div class="modal-header">
+            <h3>Editar Destino</h3>
+            <button class="close-btn" onclick="cerrarModalEditar()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="frmEditar" onsubmit="actualizarDestino(event)">
+                <input type="hidden" id="txtIdEditar">
+                <div class="form-group">
+                    <label>Nombre del Destino</label>
+                    <input type="text" id="txtNombreDestinoEditar" required>
+                </div>
+                <div class="form-group">
+                    <label>Lugar</label>
+                    <input type="text" id="txtLugarDestinoEditar" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Destino</label>
+                    <select id="txtTipoDestinoEditar" required>
+                        <option value="Playa">Playa</option>
+                        <option value="Montaña">Montaña</option>
+                        <option value="Ciudad">Ciudad</option>
+                        <option value="Histórico">Histórico</option>
+                        <option value="Natural">Natural</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Relax">Relax</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="txtDescripcionDestinoEditar" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Actualizar Destino</button>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="js/Controllers/DestinosAdmin.js"></script>
 </body>
- 
 </html>

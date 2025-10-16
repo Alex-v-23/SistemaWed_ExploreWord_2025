@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Empleados - Explore World</title>
+    <title>Gestión de Clientes - Explore World</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/ClientesAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="CSS/EmpleadoAdmin.css">
 </head>
+
 <body>
-    <!-- Barra lateral desplegable con hover -->
-    <div class="sidebar" id="sidebar">
+    <!-- Sidebar desplegable -->
+    <div class="sidebar">
         <div class="logo">
             <div class="logo-icon">
                 <i class="fas fa-bus"></i>
@@ -18,48 +19,33 @@
             <div class="logo-text">Explore World</div>
         </div>
         <ul class="menu">
-            <li>
-                <a href="InicioAdmin.html">
-                    <i class="fas fa-home"></i>
-                    <span class="menu-text">Inicio</span>
-                </a>
+            <li onclick="window.location.href='InicioAdmin.html'">
+                <i class="fas fa-home"></i>
+                <span class="menu-text">Inicio</span>
             </li>
-            <li>
-                <a href="ViajesAdmin.html">
-                    <i class="fas fa-route"></i>
-                    <span class="menu-text">Viajes</span>
-                </a>
+            <li onclick="window.location.href='ViajesAdmin.html'">
+                <i class="fas fa-route"></i>
+                <span class="menu-text">Viajes</span>
             </li>
-            <li class="active">
-                <a href="EmpleadoAdmin.html">
-                    <i class="fas fa-users"></i>
-                    <span class="menu-text">Empleados</span>
-                </a>
+            <li onclick="window.location.href='EmpleadoAdmin.html'">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Empleados</span>
             </li>
-            <li>
-                <a href="DestinosAdmin.html">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span class="menu-text">Destinos</span>
-                </a>
+            <li onclick="window.location.href='DestinosAdmin.html'">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="menu-text">Destinos</span>
             </li>
-            <li>
-                <a href="FacturaAdmin.html">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span class="menu-text">Factura</span>
-                </a>
+            <li onclick="window.location.href='FacturaAdmin.html'">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="menu-text">Factura</span>
             </li>
-            <li>
-                <a href="ReservacionesAdmin.html">
-                    <i class="fas fa-calendar-check"></i>
-                    <span class="menu-text">Reservaciones</span>
-                </a>
+            <li onclick="window.location.href='ReservacionesAdmin.html'">
+                <i class="fas fa-calendar-check"></i>
+                <span class="menu-text">Reservaciones</span>
             </li>
-            
-            <li>
-                <a href="ClientesAdmin.html">
-                    <i class="fas fa-user-friends"></i>
-                    <span class="menu-text">Clientes</span>
-                </a>
+            <li class="active" onclick="window.location.href='ClientesAdmin.html'">
+                <i class="fas fa-user-friends"></i>
+                <span class="menu-text">Clientes</span>
             </li>
             <li class="btn-logout" onclick="cerrarSesion()">
                 <i class="fas fa-sign-out-alt"></i>
@@ -67,14 +53,14 @@
             </li>
         </ul>
     </div>
-    
+
     <div class="main-content">
         <!-- Navbar superior -->
         <nav class="navbar">
-            <h1 class="navbar-title">GESTIÓN DE EMPLEADOS</h1>
+            <h1 class="navbar-title">GESTIÓN DE CLIENTES</h1>
             <div class="navbar-right">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput" onkeyup="filtrarEmpleados()">
+                    <input type="text" class="search-input" placeholder="Buscar clientes..." id="searchInput" onkeyup="filtrarClientes()">
                     <i class="fas fa-search search-icon"></i>
                 </div>
                 <div class="user-profile" onclick="toggleUserMenu()">
@@ -86,7 +72,7 @@
                 </div>
             </div>
         </nav>
-        
+
         <div class="dashboard-content">
             <div class="container">
                 <div class="controls">
@@ -111,17 +97,15 @@
                                 <th>Email</th>
                                 <th>Teléfono</th>
                                 <th>Dirección</th>
-                                <th>Salario</th>
-                                <th>Fecha Nacimiento</th>
-                                <th>ID Rango</th>
+                                <th>DUI</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tablaBody">
                             <tr>
-                                <td colspan="10" style="text-align: center; padding: 40px;">
+                                <td colspan="8" style="text-align: center; padding: 40px;">
                                     <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary);"></i>
-                                    <p style="margin-top: 10px;">Cargando empleados...</p>
+                                    <p style="margin-top: 10px;">Cargando clientes...</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -141,15 +125,11 @@
     <!-- Modal Agregar -->
     <dialog id="mdAgregar">
         <div class="modal-header">
-            <h3>Agregar Nuevo Empleado</h3>
+            <h3>Agregar Nuevo Cliente</h3>
             <button class="close-btn" onclick="cerrarModalAgregar()">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="frmAgregar" onsubmit="agregarEmpleado(event)">
-                <div class="form-group">
-                    <label>ID Rango</label>
-                    <input type="number" id="txtIdRango" min="1" required>
-                </div>
+            <form id="frmAgregar" onsubmit="agregarCliente(event)">
                 <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" id="txtNombre" required>
@@ -163,22 +143,18 @@
                     <input type="email" id="txtEmail" required>
                 </div>
                 <div class="form-group">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" id="dateFechaNacimiento" required>
-                </div>
-                <div class="form-group">
                     <label>Teléfono</label>
-                    <input type="text" id="txtTelefono">
+                    <input type="text" id="txtTelefono" required>
                 </div>
                 <div class="form-group">
                     <label>Dirección</label>
-                    <textarea id="txtDireccion" rows="3"></textarea>
+                    <input type="text" id="txtDireccion" required>
                 </div>
                 <div class="form-group">
-                    <label>Salario</label>
-                    <input type="number" id="txtSalario" step="0.01" min="0" required>
+                    <label>DUI</label>
+                    <input type="text" id="txtDUI" placeholder="00000000-0" pattern="[0-9]{8}-[0-9]{1}">
                 </div>
-                <button type="submit" class="btn-submit">Guardar Empleado</button>
+                <button type="submit" class="btn-submit">Guardar Cliente</button>
             </form>
         </div>
     </dialog>
@@ -186,16 +162,12 @@
     <!-- Modal Editar -->
     <dialog id="mdEditar">
         <div class="modal-header">
-            <h3>Editar Empleado</h3>
+            <h3>Editar Cliente</h3>
             <button class="close-btn" onclick="cerrarModalEditar()">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="frmEditar" onsubmit="actualizarEmpleado(event)">
+            <form id="frmEditar" onsubmit="actualizarCliente(event)">
                 <input type="hidden" id="txtIdEditar">
-                <div class="form-group">
-                    <label>ID Rango</label>
-                    <input type="number" id="txtIdRangoEditar" min="1" required>
-                </div>
                 <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" id="txtNombreEditar" required>
@@ -209,26 +181,22 @@
                     <input type="email" id="txtEmailEditar" required>
                 </div>
                 <div class="form-group">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" id="dateFechaNacimientoEditar" required>
-                </div>
-                <div class="form-group">
                     <label>Teléfono</label>
-                    <input type="text" id="txtTelefonoEditar">
+                    <input type="text" id="txtTelefonoEditar" required>
                 </div>
                 <div class="form-group">
                     <label>Dirección</label>
-                    <textarea id="txtDireccionEditar" rows="3"></textarea>
+                    <input type="text" id="txtDireccionEditar" required>
                 </div>
                 <div class="form-group">
-                    <label>Salario</label>
-                    <input type="number" id="txtSalarioEditar" step="0.01" min="0" required>
+                    <label>DUI</label>
+                    <input type="text" id="txtDUIEditar" placeholder="00000000-0" pattern="[0-9]{8}-[0-9]{1}">
                 </div>
-                <button type="submit" class="btn-submit">Actualizar Empleado</button>
+                <button type="submit" class="btn-submit">Actualizar Cliente</button>
             </form>
         </div>
     </dialog>
 
-<script src="js/Controllers/EmpleadoAdmin.js"></script>
+    <script src="js/Controllers/ClientesAdmin.js"></script>
 </body>
 </html>

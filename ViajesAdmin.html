@@ -6,610 +6,11 @@
     <title>Gestión de Viajes - Explore World</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        :root {
-            --primary: #1E40AF;
-            --success: #2ecc71;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --text: #334155;
-            --border: #e2e8f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #f1f5f9;
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* Sidebar desplegable */
-        .sidebar {
-            width: 70px;
-            background: linear-gradient(180deg, var(--primary) 0%, #1e3a8a 100%);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            overflow: hidden;
-            transition: width 0.3s ease;
-            z-index: 1000;
-            box-shadow: 3px 0 15px rgba(0,0,0,0.2);
-        }
-
-        .sidebar:hover {
-            width: 260px;
-        }
-
-        .sidebar:hover .menu-text {
-            display: inline-block;
-            opacity: 1;
-        }
-
-        .sidebar:hover .logo-text {
-            display: block;
-            opacity: 1;
-        }
-
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            height: 80px;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .logo-icon i {
-            color: var(--primary);
-            font-size: 18px;
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .menu {
-            list-style: none;
-        }
-
-        .menu li {
-            padding: 14px 20px;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            color: rgba(255,255,255,0.9);
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .menu li:hover {
-            background-color: rgba(255,255,255,0.1);
-            border-left: 4px solid white;
-        }
-
-        .menu li.active {
-            background-color: rgba(255,255,255,0.15);
-            border-left: 4px solid white;
-        }
-
-        .menu li i {
-            margin-right: 15px;
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .menu-text {
-            font-size: 16px;
-            font-weight: 500;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .btn-logout {
-            margin-top: 30px;
-            background-color: rgba(239, 68, 68, 0.2);
-        }
-
-        .btn-logout:hover {
-            background-color: rgba(239, 68, 68, 0.3);
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 70px;
-            display: flex;
-            flex-direction: column;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Navbar superior */
-        .navbar {
-            background: white;
-            padding: 0 30px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-title {
-            color: var(--primary);
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .search-container {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background-color: var(--light);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .user-profile:hover {
-            background-color: var(--light);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 14px;
-        }
-
-        .user-role {
-            font-size: 12px;
-            color: var(--text);
-        }
-
-        /* Dashboard Content */
-        .dashboard-content {
-            padding: 30px;
-            background-color: #f8fafc;
-            min-height: calc(100vh - 70px);
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .controls label {
-            font-weight: 600;
-            margin-right: 10px;
-        }
-
-        .controls select {
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            box-shadow: 0 0 0 1px var(--border);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        table thead {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-        }
-
-        table th {
-            padding: 16px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-
-        table td {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
-        }
-
-        table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-activo { background: rgba(46, 204, 113, 0.2); color: #27ae60; }
-        .status-inactivo { background: rgba(149, 165, 166, 0.2); color: #7f8c8d; }
-        .status-completado { background: rgba(52, 152, 219, 0.2); color: #2980b9; }
-        .status-cancelado { background: rgba(231, 76, 60, 0.2); color: #c0392b; }
-        .status-proximo { background: rgba(241, 196, 15, 0.2); color: #f39c12; }
-
-        .btn-action {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-            margin-right: 5px;
-        }
-
-        .btn-edit {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #27ae60;
-            transform: translateY(-2px);
-        }
-
-        .btn-delete {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
-
-        .btn-add {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 999;
-            transition: all 0.3s;
-        }
-
-        .btn-add:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 25px;
-        }
-
-        .page-btn {
-            padding: 10px 16px;
-            border: 2px solid var(--border);
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .page-btn:hover {
-            border-color: var(--primary);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .page-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        dialog {
-            border: none;
-            border-radius: 20px;
-            padding: 0;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            margin: 0;
-        }
-
-        dialog::backdrop {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .close-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 25px 30px;
-            max-height: calc(90vh - 140px);
-            overflow-y: auto;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 13px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 5px;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.4);
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar .menu-text,
-            .sidebar .logo-text {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-                gap: 15px;
-            }
-
-            .navbar-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .search-container {
-                width: 60%;
-            }
-
-            .sidebar:hover {
-                width: 70px;
-            }
-            
-            .sidebar:hover .menu-text,
-            .sidebar:hover .logo-text {
-                display: none;
-            }
-
-            .dashboard-content {
-                padding: 15px;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            table th, table td {
-                padding: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .navbar-right {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .search-container {
-                width: 100%;
-            }
-
-            .user-profile {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .dashboard-content {
-                padding: 15px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/ViajesAdmin.css">
 </head>
 <body>
-    <!-- Sidebar desplegable -->
-    <div class="sidebar">
+     <!-- Barra lateral desplegable con hover -->
+    <div class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">
                 <i class="fas fa-bus"></i>
@@ -617,37 +18,47 @@
             <div class="logo-text">Explore World</div>
         </div>
         <ul class="menu">
-            <li onclick="window.location.href='InicioAdmin.html'">
-                <i class="fas fa-home"></i>
-                <span class="menu-text">Inicio</span>
+            <li>
+                <a href="InicioAdmin.html">
+                    <i class="fas fa-home"></i>
+                    <span class="menu-text">Inicio</span>
+                </a>
             </li>
-            <li class="active" onclick="window.location.href='ViajesAdmin.html'">
-                <i class="fas fa-route"></i>
-                <span class="menu-text">Viajes</span>
+            <li class="active">
+                <a href="ViajesAdmin.html">
+                    <i class="fas fa-route"></i>
+                    <span class="menu-text">Viajes</span>
+                </a>
             </li>
-            <li onclick="window.location.href='EmpleadoAdmin.html'">
-                <i class="fas fa-users"></i>
-                <span class="menu-text">Empleados</span>
+            <li>
+                <a href="EmpleadoAdmin.html">
+                    <i class="fas fa-users"></i>
+                    <span class="menu-text">Empleados</span>
+                </a>
             </li>
-            <li onclick="window.location.href='DestinosAdmin.html'">
-                <i class="fas fa-map-marked-alt"></i>
-                <span class="menu-text">Destinos</span>
+            <li>
+                <a href="DestinosAdmin.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span class="menu-text">Destinos</span>
+                </a>
             </li>
-            <li onclick="window.location.href='FacturaAdmin.html'">
-                <i class="fas fa-file-invoice-dollar"></i>
-                <span class="menu-text">Factura</span>
+            <li>
+                <a href="FacturaAdmin.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span class="menu-text">Factura</span>
+                </a>
             </li>
-            <li onclick="window.location.href='ReservacionesAdmin.html'">
-                <i class="fas fa-calendar-check"></i>
-                <span class="menu-text">Reservaciones</span>
+            <li>
+                <a href="ReservacionesAdmin.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span class="menu-text">Reservaciones</span>
+                </a>
             </li>
-            <li onclick="window.location.href='ServiciosAdmin.html'">
-                <i class="fas fa-concierge-bell"></i>
-                <span class="menu-text">Servicios</span>
-            </li>
-            <li onclick="window.location.href='clientes.html'">
-                <i class="fas fa-user-friends"></i>
-                <span class="menu-text">Clientes</span>
+            <li>
+                <a href="ClientesAdmin.html">
+                    <i class="fas fa-user-friends"></i>
+                    <span class="menu-text">Clientes</span>
+                </a>
             </li>
             <li class="btn-logout" onclick="cerrarSesion()">
                 <i class="fas fa-sign-out-alt"></i>
@@ -662,7 +73,7 @@
             <h1 class="navbar-title">GESTIÓN DE VIAJES</h1>
             <div class="navbar-right">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Buscar...">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput" onkeyup="filtrarViajes()">
                     <i class="fas fa-search search-icon"></i>
                 </div>
                 <div class="user-profile" onclick="toggleUserMenu()">
@@ -701,6 +112,8 @@
                                 <th>Estado</th>
                                 <th>Cliente</th>
                                 <th>Empleado</th>
+                                <th>Transporte</th>
+                                <th>Horario</th>
                                 <th>Salida</th>
                                 <th>Regreso</th>
                                 <th>Acciones</th>
@@ -708,7 +121,7 @@
                         </thead>
                         <tbody id="tablaBody">
                             <tr>
-                                <td colspan="11" style="text-align: center; padding: 40px;">
+                                <td colspan="13" style="text-align: center; padding: 40px;">
                                     <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary);"></i>
                                     <p style="margin-top: 10px;">Cargando viajes...</p>
                                 </td>
@@ -749,14 +162,14 @@
                 </div>
                 <div class="form-group">
                     <label>Precio</label>
-                    <input type="text" id="txtPrecio" step="0.01" min="0" required>
+                    <input type="number" id="txtPrecio" step="0.01" min="0" required>
                 </div>
                 <div class="form-group">
                     <label>Estado</label>
                     <select id="txtEstado" required>
                         <option value="">Seleccione...</option>
+                        <option value="Programado">Programado</option>
                         <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
                         <option value="Completado">Completado</option>
                         <option value="Cancelado">Cancelado</option>
                         <option value="Proximo">Próximo</option>
@@ -764,19 +177,23 @@
                 </div>
                 <div class="form-group">
                     <label>ID Cliente</label>
-                    <input type="text" id="txtIdCliente" min="1" required>
+                    <input type="number" id="txtIdCliente" min="1" required>
                 </div>
                 <div class="form-group">
                     <label>ID Empleado</label>
-                    <input type="text" id="txtIdEmpleado" min="1" required>
+                    <input type="number" id="txtIdEmpleado" min="1" required>
                 </div>
                 <div class="form-group">
                     <label>ID Transporte</label>
-                    <input type="text" id="txtIdTransporte" min="1" required>
+                    <input type="number" id="txtIdTransporte" min="1" required>
                 </div>
                 <div class="form-group">
                     <label>ID Horario</label>
-                    <input type="text" id="txtIdHorario" min="1" required>
+                    <input type="number" id="txtIdHorario" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>ID Servicio</label>
+                    <input type="number" id="txtIdServicio" min="1" required>
                 </div>
                 <div class="form-group">
                     <label>Fecha Salida</label>
@@ -820,8 +237,8 @@
                     <label>Estado</label>
                     <select id="txtEstadoEditar" required>
                         <option value="">Seleccione...</option>
+                        <option value="Programado">Programado</option>
                         <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
                         <option value="Completado">Completado</option>
                         <option value="Cancelado">Cancelado</option>
                         <option value="Proximo">Próximo</option>
@@ -844,6 +261,10 @@
                     <input type="text" id="txtIdHorarioEditar" min="1" required>
                 </div>
                 <div class="form-group">
+                    <label>ID Servicio</label>
+                    <input type="text" id="txtIdServicioEditar" min="1" required>
+                </div>
+                <div class="form-group">
                     <label>Fecha Salida</label>
                     <input type="date" id="dateFechaSalidaEditar" required>
                 </div>
@@ -856,400 +277,6 @@
         </div>
     </dialog>
 
-    <script>
-        const API_URL = 'http://localhost:3000/api/viajes';
-        let viajes = [];
-        let paginaActual = 1;
-        let tamañoPagina = 10;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado') || sessionStorage.getItem('usuarioLogueado') || '{}');
-            
-            if (usuarioLogueado.nombre) {
-                document.getElementById('userName').textContent = usuarioLogueado.nombre;
-                document.getElementById('userRole').textContent = usuarioLogueado.rol || 'Usuario';
-                const iniciales = usuarioLogueado.nombre.split(' ').map(n => n[0]).join('').toUpperCase();
-                document.getElementById('userAvatar').textContent = iniciales;
-            }
-
-            cargarViajes();
-
-            document.querySelector('.search-input').addEventListener('input', function(e) {
-                const termino = e.target.value.toLowerCase();
-                console.log('Buscando:', termino);
-            });
-        });
-
-        async function cargarViajes() {
-            try {
-                const response = await fetch(API_URL, {
-                    headers: {
-                        'Authorization': 'Bearer ' + (localStorage.getItem('token') || ''),
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) throw new Error('Error al cargar');
-
-                viajes = await response.json();
-                mostrarViajes();
-            } catch (error) {
-                console.error('Error:', error);
-                cargarDatosEjemplo();
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Modo Demo',
-                    text: 'Mostrando datos de ejemplo. Configura tu API.',
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-            }
-        }
-
-        function cargarDatosEjemplo() {
-            viajes = [
-                {id: 1, nombre: 'Tour Ruta de las Flores', destino: 'Ruta de las Flores', fecha: '2025-11-15', precio: 45.00, estado: 'Activo', idCliente: 101, idEmpleado: 5, idTransporte: 3, idHorario: 2, fechaSalida: '2025-11-15', fechaRegreso: '2025-11-15'},
-                {id: 2, nombre: 'Volcán de Santa Ana', destino: 'Santa Ana', fecha: '2025-11-20', precio: 35.00, estado: 'Proximo', idCliente: 102, idEmpleado: 3, idTransporte: 1, idHorario: 1, fechaSalida: '2025-11-20', fechaRegreso: '2025-11-20'},
-                {id: 3, nombre: 'Playa El Tunco', destino: 'La Libertad', fecha: '2025-10-25', precio: 50.00, estado: 'Completado', idCliente: 103, idEmpleado: 7, idTransporte: 2, idHorario: 3, fechaSalida: '2025-10-25', fechaRegreso: '2025-10-26'},
-                {id: 4, nombre: 'Suchitoto Colonial', destino: 'Suchitoto', fecha: '2025-11-18', precio: 40.00, estado: 'Activo', idCliente: 104, idEmpleado: 4, idTransporte: 1, idHorario: 2, fechaSalida: '2025-11-18', fechaRegreso: '2025-11-18'},
-                {id: 5, nombre: 'Lago de Coatepeque', destino: 'Coatepeque', fecha: '2025-11-22', precio: 55.00, estado: 'Proximo', idCliente: 105, idEmpleado: 6, idTransporte: 3, idHorario: 1, fechaSalida: '2025-11-22', fechaRegreso: '2025-11-23'},
-                {id: 6, nombre: 'Joya de Cerén', destino: 'La Libertad', fecha: '2025-11-16', precio: 30.00, estado: 'Activo', idCliente: 106, idEmpleado: 2, idTransporte: 2, idHorario: 1, fechaSalida: '2025-11-16', fechaRegreso: '2025-11-16'},
-                {id: 7, nombre: 'Parque Nacional El Imposible', destino: 'Ahuachapán', fecha: '2025-11-25', precio: 60.00, estado: 'Proximo', idCliente: 107, idEmpleado: 5, idTransporte: 3, idHorario: 2, fechaSalida: '2025-11-25', fechaRegreso: '2025-11-26'}
-            ];
-            mostrarViajes();
-        }
-
-        function mostrarViajes() {
-            const tbody = document.getElementById('tablaBody');
-            const inicio = (paginaActual - 1) * tamañoPagina;
-            const fin = inicio + tamañoPagina;
-            const viajesPagina = viajes.slice(inicio, fin);
-
-            if (viajes.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px;">No hay viajes registrados</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = viajesPagina.map(viaje => `
-                <tr>
-                    <td>${viaje.id}</td>
-                    <td>${viaje.nombre}</td>
-                    <td>${viaje.destino}</td>
-                    <td>${viaje.fecha}</td>
-                    <td>${parseFloat(viaje.precio).toFixed(2)}</td>
-                    <td><span class="status-badge status-${viaje.estado.toLowerCase()}">${viaje.estado}</span></td>
-                    <td>${viaje.idCliente}</td>
-                    <td>${viaje.idEmpleado}</td>
-                    <td>${viaje.fechaSalida}</td>
-                    <td>${viaje.fechaRegreso}</td>
-                    <td>
-                        <button class="btn-action btn-edit" onclick="abrirModalEditar(${viaje.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-action btn-delete" onclick="eliminarViaje(${viaje.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-
-            actualizarPaginacion();
-        }
-
-        function actualizarPaginacion() {
-            const totalPaginas = Math.ceil(viajes.length / tamañoPagina);
-            const pagination = document.getElementById('pagination');
-            
-            let html = `
-                <button class="page-btn" onclick="cambiarPagina(${paginaActual - 1})" ${paginaActual === 1 ? 'disabled' : ''}>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            `;
-
-            for (let i = 1; i <= totalPaginas; i++) {
-                html += `<button class="page-btn ${i === paginaActual ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
-            }
-
-            html += `
-                <button class="page-btn" onclick="cambiarPagina(${paginaActual + 1})" ${paginaActual === totalPaginas ? 'disabled' : ''}>
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            `;
-
-            pagination.innerHTML = html;
-        }
-
-        function cambiarPagina(pagina) {
-            const totalPaginas = Math.ceil(viajes.length / tamañoPagina);
-            if (pagina < 1 || pagina > totalPaginas) return;
-            paginaActual = pagina;
-            mostrarViajes();
-        }
-
-        function cambiarTamañoPagina() {
-            tamañoPagina = parseInt(document.getElementById('pageSize').value);
-            paginaActual = 1;
-            mostrarViajes();
-        }
-
-        function abrirModalAgregar() {
-            document.getElementById('frmAgregar').reset();
-            document.getElementById('mdAgregar').showModal();
-        }
-
-        function cerrarModalAgregar() {
-            document.getElementById('mdAgregar').close();
-        }
-
-        function abrirModalEditar(id) {
-            const viaje = viajes.find(v => v.id === id);
-            if (!viaje) return;
-
-            document.getElementById('txtIdEditar').value = viaje.id;
-            document.getElementById('txtNombreEditar').value = viaje.nombre;
-            document.getElementById('txtDestinoEditar').value = viaje.destino;
-            document.getElementById('dateFechaEditar').value = viaje.fecha;
-            document.getElementById('txtPrecioEditar').value = viaje.precio;
-            document.getElementById('txtEstadoEditar').value = viaje.estado;
-            document.getElementById('txtIdClienteEditar').value = viaje.idCliente;
-            document.getElementById('txtIdEmpleadoEditar').value = viaje.idEmpleado;
-            document.getElementById('txtIdTransporteEditar').value = viaje.idTransporte;
-            document.getElementById('txtIdHorarioEditar').value = viaje.idHorario;
-            document.getElementById('dateFechaSalidaEditar').value = viaje.fechaSalida;
-            document.getElementById('dateFechaRegresoEditar').value = viaje.fechaRegreso;
-
-            document.getElementById('mdEditar').showModal();
-        }
-
-        function cerrarModalEditar() {
-            document.getElementById('mdEditar').close();
-        }
-
-        async function agregarViaje(event) {
-            event.preventDefault();
-
-            const nuevoViaje = {
-                nombre: document.getElementById('txtNombre').value,
-                destino: document.getElementById('txtDestino').value,
-                fecha: document.getElementById('dateFecha').value,
-                precio: parseFloat(document.getElementById('txtPrecio').value),
-                estado: document.getElementById('txtEstado').value,
-                idCliente: parseInt(document.getElementById('txtIdCliente').value),
-                idEmpleado: parseInt(document.getElementById('txtIdEmpleado').value),
-                idTransporte: parseInt(document.getElementById('txtIdTransporte').value),
-                idHorario: parseInt(document.getElementById('txtIdHorario').value),
-                fechaSalida: document.getElementById('dateFechaSalida').value,
-                fechaRegreso: document.getElementById('dateFechaRegreso').value
-            };
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + (localStorage.getItem('token') || ''),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(nuevoViaje)
-                });
-
-                if (!response.ok) throw new Error('Error al agregar');
-
-                const viajeCreado = await response.json();
-                viajes.push(viajeCreado);
-                mostrarViajes();
-                cerrarModalAgregar();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Agregado',
-                    text: 'El viaje se ha agregado correctamente',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            } catch (error) {
-                console.error('Error:', error);
-                nuevoViaje.id = viajes.length > 0 ? Math.max(...viajes.map(v => v.id)) + 1 : 1;
-                viajes.push(nuevoViaje);
-                mostrarViajes();
-                cerrarModalAgregar();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Agregado (Demo)',
-                    text: 'El viaje se ha agregado en modo demo',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            }
-        }
-
-        async function actualizarViaje(event) {
-            event.preventDefault();
-
-            const id = parseInt(document.getElementById('txtIdEditar').value);
-            const viajeActualizado = {
-                id: id,
-                nombre: document.getElementById('txtNombreEditar').value,
-                destino: document.getElementById('txtDestinoEditar').value,
-                fecha: document.getElementById('dateFechaEditar').value,
-                precio: parseFloat(document.getElementById('txtPrecioEditar').value),
-                estado: document.getElementById('txtEstadoEditar').value,
-                idCliente: parseInt(document.getElementById('txtIdClienteEditar').value),
-                idEmpleado: parseInt(document.getElementById('txtIdEmpleadoEditar').value),
-                idTransporte: parseInt(document.getElementById('txtIdTransporteEditar').value),
-                idHorario: parseInt(document.getElementById('txtIdHorarioEditar').value),
-                fechaSalida: document.getElementById('dateFechaSalidaEditar').value,
-                fechaRegreso: document.getElementById('dateFechaRegresoEditar').value
-            };
-
-            try {
-                const response = await fetch(`${API_URL}/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'Bearer ' + (localStorage.getItem('token') || ''),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(viajeActualizado)
-                });
-
-                if (!response.ok) throw new Error('Error al actualizar');
-
-                const index = viajes.findIndex(v => v.id === id);
-                if (index !== -1) {
-                    viajes[index] = viajeActualizado;
-                }
-                mostrarViajes();
-                cerrarModalEditar();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Actualizado',
-                    text: 'El viaje se ha actualizado correctamente',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            } catch (error) {
-                console.error('Error:', error);
-                const index = viajes.findIndex(v => v.id === id);
-                if (index !== -1) {
-                    viajes[index] = viajeActualizado;
-                }
-                mostrarViajes();
-                cerrarModalEditar();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Actualizado (Demo)',
-                    text: 'El viaje se ha actualizado en modo demo',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            }
-        }
-
-        async function eliminarViaje(id) {
-            const result = await Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Esta acción no se puede deshacer',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            });
-
-            if (!result.isConfirmed) return;
-
-            try {
-                const response = await fetch(`${API_URL}/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + (localStorage.getItem('token') || ''),
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) throw new Error('Error al eliminar');
-
-                viajes = viajes.filter(v => v.id !== id);
-                mostrarViajes();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Eliminado',
-                    text: 'El viaje se ha eliminado correctamente',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            } catch (error) {
-                console.error('Error:', error);
-                viajes = viajes.filter(v => v.id !== id);
-                mostrarViajes();
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Viaje Eliminado (Demo)',
-                    text: 'El viaje se ha eliminado en modo demo',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            }
-        }
-
-        function cerrarSesion() {
-            Swal.fire({
-                title: "¿Estás seguro?",
-                text: "Se cerrará tu sesión.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#1E40AF",
-                cancelButtonColor: "#64748b",
-                confirmButtonText: "Sí, cerrar sesión",
-                cancelButtonText: "Cancelar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('usuarioLogueado');
-                    sessionStorage.removeItem('usuarioLogueado');
-                    window.location.href = 'login.html?logout=true';
-                }
-            });
-        }
-
-        function toggleUserMenu() {
-            const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado') || sessionStorage.getItem('usuarioLogueado') || '{}');
-            const nombre = usuarioLogueado.nombre || 'Usuario';
-            const email = usuarioLogueado.email || 'usuario@exploreworld.com';
-            const rol = usuarioLogueado.rol || 'Usuario';
-            const iniciales = nombre.split(' ').map(n => n[0]).join('').toUpperCase() || 'US';
-
-            Swal.fire({
-                title: 'Perfil de Usuario',
-                html: `
-                    <div style="text-align: left; padding: 15px 0;">
-                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1E40AF, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">${iniciales}</div>
-                            <div>
-                                <div style="font-weight: bold; font-size: 18px;">${nombre}</div>
-                                <div style="color: #64748B; font-size: 14px;">${rol}</div>
-                                <div style="color: #64748B; font-size: 12px;">${email}</div>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid #E2E8F0; padding-top: 15px;">
-                            <button onclick="cerrarSesion()" style="width: 100%; padding: 12px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 6px; cursor: pointer; color: #DC2626; font-weight: 600;">
-                                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Cerrar Sesión
-                            </button>
-                        </div>
-                    </div>
-                `,
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: 400
-            });
-        }
-    </script>
+    <script src="js/Controllers/ViajesAdmin.js"></script>
 </body>
 </html>

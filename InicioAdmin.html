@@ -5,481 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Explore World</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        :root {
-            --primary: #2c5aa0;
-            --secondary: #1e3a8a;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --text: #334155;
-            --border: #e2e8f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f1f5f9;
-            color: var(--text);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Barra lateral desplegable con hover */
-        .sidebar {
-            width: 70px;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 3px 0 10px rgba(0,0,0,0.1);
-            height: 100vh;
-            position: fixed;
-            overflow: hidden;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar:hover {
-            width: 260px;
-            box-shadow: 3px 0 15px rgba(0,0,0,0.2);
-        }
-
-        .sidebar:hover .menu-text {
-            display: inline-block;
-            opacity: 1;
-        }
-
-        .sidebar:hover .logo-text {
-            display: block;
-            opacity: 1;
-        }
-
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            height: 80px;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--primary);
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .logo-icon i {
-            color: var(--primary);
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .menu {
-            list-style: none;
-        }
-
-        .menu li {
-            padding: 14px 20px;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            color: rgba(255,255,255,0.9);
-            position: relative;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .menu li a {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .menu li:hover {
-            background-color: rgba(255,255,255,0.1);
-            border-left: 4px solid white;
-        }
-
-        .menu li.active {
-            background-color: rgba(255,255,255,0.15);
-            border-left: 4px solid white;
-        }
-
-        .menu li i {
-            margin-right: 15px;
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .menu-text {
-            font-size: 16px;
-            font-weight: 500;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .btn-logout {
-            margin-top: 30px;
-            background-color: rgba(239, 68, 68, 0.2);
-        }
-
-        .btn-logout:hover {
-            background-color: rgba(239, 68, 68, 0.3);
-        }
-
-        /* Contenido principal */
-        .main-content {
-            flex: 1;
-            margin-left: 70px;
-            display: flex;
-            flex-direction: column;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Navbar superior */
-        .navbar {
-            background: white;
-            padding: 0 30px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-title {
-            color: var(--primary);
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .search-container {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background-color: var(--light);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .user-profile:hover {
-            background-color: var(--light);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 14px;
-        }
-
-        .user-role {
-            font-size: 12px;
-            color: var(--text);
-        }
-
-        /* Contenido del dashboard */
-        .dashboard-content {
-            padding: 30px;
-            background-color: #f8fafc;
-            min-height: calc(100vh - 70px);
-        }
-
-        /* Tarjetas de métricas */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .metric-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            border-left: 4px solid var(--primary);
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .metric-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .metric-title {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        .metric-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .metric-change {
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-        }
-
-        .metric-change.up {
-            color: var(--success);
-        }
-
-        .metric-change.down {
-            color: var(--danger);
-        }
-
-        /* Secciones de gráficos */
-        .charts-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .chart-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .chart-title i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-
-        .chart-content {
-            flex: 1;
-            position: relative;
-        }
-
-        /* Loading states */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-            position: relative;
-        }
-
-        .loading::after {
-            content: "Cargando...";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .charts-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar .menu-text,
-            .sidebar .logo-text {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-                gap: 15px;
-            }
-
-            .navbar-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .search-container {
-                width: 60%;
-            }
-
-            /* Desactivar hover en móviles */
-            .sidebar:hover {
-                width: 70px;
-            }
-            
-            .sidebar:hover .menu-text,
-            .sidebar:hover .logo-text {
-                display: none;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .navbar-right {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .search-container {
-                width: 100%;
-            }
-
-            .user-profile {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .dashboard-content {
-                padding: 15px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/InicioAdmin.css">
 </head>
 <body>
-    <!-- Barra lateral desplegable con hover -->
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">
                 <i class="fas fa-bus"></i>
             </div>
-            <div class="logo-text">Explore Word</div>
+            <div class="logo-text">Explore World</div>
         </div>
         <ul class="menu">
             <li class="active">
@@ -519,13 +55,7 @@
                 </a>
             </li>
             <li>
-                <a href="ServiciosAdmin.html">
-                    <i class="fas fa-concierge-bell"></i>
-                    <span class="menu-text">Servicios</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="ClientesAdmin.html">
                     <i class="fas fa-user-friends"></i>
                     <span class="menu-text">Clientes</span>
                 </a>
@@ -537,16 +67,10 @@
         </ul>
     </div>
     
-    <!-- Contenido principal -->
     <div class="main-content" id="mainContent">
-        <!-- Navbar superior -->
         <nav class="navbar">
             <h1 class="navbar-title">RESUMEN GENERAL</h1>
             <div class="navbar-right">
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Buscar...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
                 <div class="user-profile" onclick="toggleUserMenu()">
                     <div class="user-avatar" id="userAvatar">AD</div>
                     <div class="user-info">
@@ -557,396 +81,93 @@
             </div>
         </nav>
         
-        <!-- Contenido del dashboard -->
         <div class="dashboard-content">
-            <!-- Tarjetas de métricas -->
             <div class="metrics-grid">
-                <div class="metric-card" id="viajesCard">
+                <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">VIAJES ACTIVOS</div>
                         <div class="metric-icon" style="background-color: var(--primary);">
                             <i class="fas fa-route"></i>
                         </div>
                     </div>
-                    <div class="metric-value" id="viajesValue">24</div>
-                    <div class="metric-change up" id="viajesTrend">
-                        <i class="fas fa-arrow-up"></i> +12% vs mes pasado
+                    <div class="metric-value" id="viajesCount">0</div>
+                    <div class="metric-change up">
+                        <i class="fas fa-chart-line"></i> Cargando...
                     </div>
                 </div>
                 
-                <div class="metric-card" id="ingresosCard">
+                <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-title">INGRESOS MENSUALES</div>
+                        <div class="metric-title">DESTINOS REGISTRADOS</div>
                         <div class="metric-icon" style="background-color: var(--success);">
-                            <i class="fas fa-dollar-sign"></i>
+                            <i class="fas fa-map-marked-alt"></i>
                         </div>
                     </div>
-                    <div class="metric-value" id="ingresosValue">$12,450</div>
-                    <div class="metric-change down" id="ingresosTrend">
-                        <i class="fas fa-arrow-down"></i> -5% vs mes pasado
+                    <div class="metric-value" id="destinosCount">0</div>
+                    <div class="metric-change up">
+                        <i class="fas fa-chart-line"></i> Cargando...
                     </div>
                 </div>
                 
-                <div class="metric-card" id="clientesCard">
-                    <div class="metric-header">
-                        <div class="metric-title">CLIENTES NUEVOS</div>
-                        <div class="metric-icon" style="background-color: var(--warning);">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                    </div>
-                    <div class="metric-value" id="clientesValue">18</div>
-                    <div class="metric-change up" id="clientesTrend">
-                        <i class="fas fa-arrow-up"></i> +20% vs mes pasado
-                    </div>
-                </div>
-                
-                <div class="metric-card" id="reservacionesCard">
+                <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">RESERVACIONES</div>
-                        <div class="metric-icon" style="background-color: var(--accent);">
+                        <div class="metric-icon" style="background-color: var(--warning);">
                             <i class="fas fa-calendar-check"></i>
                         </div>
                     </div>
-                    <div class="metric-value" id="reservacionesValue">32</div>
-                    <div class="metric-change up" id="reservacionesTrend">
-                        <i class="fas fa-arrow-up"></i> +8% vs mes pasado
+                    <div class="metric-value" id="reservacionesCount">0</div>
+                    <div class="metric-change up">
+                        <i class="fas fa-chart-line"></i> Cargando...
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">DESTINOS POPULARES</div>
+                        <div class="metric-icon" style="background-color: var(--accent);">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="metric-value" id="topDestinoName" style="font-size: 18px;">-</div>
+                    <div class="metric-change up">
+                        <i class="fas fa-users"></i> <span id="topDestinoCount">0</span> reservas
                     </div>
                 </div>
             </div>
             
-            <!-- Secciones de gráficos -->
             <div class="charts-container">
-                <!-- Gráfico circular de destinos -->
                 <div class="chart-card">
                     <div class="chart-title">
                         <i class="fas fa-map-marked-alt"></i> Destinos Populares
                     </div>
                     <div class="chart-content">
-                        <canvas id="destinosChart"></canvas>
+                        <div id="destinosChartContainer">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                        <canvas id="destinosChart" style="display: none;"></canvas>
                     </div>
                 </div>
                 
-                <!-- Gráfico de ingresos -->
                 <div class="chart-card">
                     <div class="chart-title">
-                        <i class="fas fa-chart-line"></i> Ingresos Mensuales
+                        <i class="fas fa-chart-bar"></i> Distribución de Reservaciones
                     </div>
                     <div class="chart-content">
-                        <canvas id="ingresosChart"></canvas>
+                        <div id="reservacionesChartContainer">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                        <canvas id="reservacionesChart" style="display: none;"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Variables globales para los gráficos
-        let destinosChart, ingresosChart;
-
-        // Función para cargar datos desde la API
-        async function cargarDatosDashboard() {
-            try {
-                // Mostrar estado de carga
-                document.getElementById('viajesCard').classList.add('loading');
-                document.getElementById('ingresosCard').classList.add('loading');
-                document.getElementById('clientesCard').classList.add('loading');
-                document.getElementById('reservacionesCard').classList.add('loading');
-
-                // Simular llamada a la API - reemplaza con tu endpoint real
-                const response = await fetch('/api/dashboard', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error al cargar datos');
-                }
-
-                const data = await response.json();
-
-                // Actualizar tarjetas de métricas
-                actualizarMetricas(data.metricas);
-                
-                // Actualizar gráficos
-                actualizarGraficos(data.graficos);
-
-                // Quitar estado de carga
-                document.getElementById('viajesCard').classList.remove('loading');
-                document.getElementById('ingresosCard').classList.remove('loading');
-                document.getElementById('clientesCard').classList.remove('loading');
-                document.getElementById('reservacionesCard').classList.remove('loading');
-
-            } catch (error) {
-                console.error('Error:', error);
-                // Quitar estado de carga
-                document.getElementById('viajesCard').classList.remove('loading');
-                document.getElementById('ingresosCard').classList.remove('loading');
-                document.getElementById('clientesCard').classList.remove('loading');
-                document.getElementById('reservacionesCard').classList.remove('loading');
-                
-                // Usar datos de ejemplo si la API falla
-                cargarDatosEjemplo();
-                
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Datos de ejemplo',
-                    text: 'No se pudieron cargar los datos reales. Mostrando información de demostración.',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            }
-        }
-
-        // Función para actualizar las métricas
-        function actualizarMetricas(metricas) {
-            document.getElementById('viajesValue').textContent = metricas.viajesActivos;
-            document.getElementById('ingresosValue').textContent = `$${metricas.ingresosMensuales.toLocaleString()}`;
-            document.getElementById('clientesValue').textContent = metricas.clientesNuevos;
-            document.getElementById('reservacionesValue').textContent = metricas.reservaciones;
-
-            // Actualizar tendencias
-            actualizarTendencia('viajes', metricas.tendenciaViajes);
-            actualizarTendencia('ingresos', metricas.tendenciaIngresos);
-            actualizarTendencia('clientes', metricas.tendenciaClientes);
-            actualizarTendencia('reservaciones', metricas.tendenciaReservaciones);
-        }
-
-        // Función para actualizar tendencias
-        function actualizarTendencia(tipo, valor) {
-            const elemento = document.getElementById(`${tipo}Trend`);
-            const icono = valor >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
-            const clase = valor >= 0 ? 'up' : 'down';
-            const texto = valor >= 0 ? `+${valor}% vs mes pasado` : `${valor}% vs mes pasado`;
-
-            elemento.innerHTML = `<i class="fas ${icono}"></i> ${texto}`;
-            elemento.className = `metric-change ${clase}`;
-        }
-
-        // Función para actualizar gráficos
-        function actualizarGraficos(graficos) {
-            // Gráfico de destinos populares (doughnut)
-            if (destinosChart) {
-                destinosChart.destroy();
-            }
-            
-            const ctxDestinos = document.getElementById('destinosChart').getContext('2d');
-            destinosChart = new Chart(ctxDestinos, {
-                type: 'doughnut',
-                data: {
-                    labels: graficos.destinos.labels,
-                    datasets: [{
-                        data: graficos.destinos.data,
-                        backgroundColor: [
-                            'rgba(44, 90, 160, 0.8)',
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(16, 185, 129, 0.8)',
-                            'rgba(245, 158, 11, 0.8)',
-                            'rgba(239, 68, 68, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(44, 90, 160, 1)',
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(245, 158, 11, 1)',
-                            'rgba(239, 68, 68, 1)'
-                        ],
-                        borderWidth: 2,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 20,
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%'
-                }
-            });
-
-            // Gráfico de ingresos mensuales (line)
-            if (ingresosChart) {
-                ingresosChart.destroy();
-            }
-            
-            const ctxIngresos = document.getElementById('ingresosChart').getContext('2d');
-            ingresosChart = new Chart(ctxIngresos, {
-                type: 'line',
-                data: {
-                    labels: graficos.ingresos.labels,
-                    datasets: [{
-                        label: 'Ingresos ($)',
-                        data: graficos.ingresos.data,
-                        backgroundColor: 'rgba(44, 90, 160, 0.1)',
-                        borderColor: 'rgba(44, 90, 160, 1)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: 'rgba(44, 90, 160, 1)',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Función para cargar datos de ejemplo
-        function cargarDatosEjemplo() {
-            const datosEjemplo = {
-                metricas: {
-                    viajesActivos: 24,
-                    ingresosMensuales: 12450,
-                    clientesNuevos: 18,
-                    reservaciones: 32,
-                    tendenciaViajes: 12,
-                    tendenciaIngresos: -5,
-                    tendenciaClientes: 20,
-                    tendenciaReservaciones: 8
-                },
-                graficos: {
-                    destinos: {
-                        labels: ['Ruta Flores', 'El Turco', 'Coatepeque', 'Volcán', 'Suchitoto'],
-                        data: [25, 15, 30, 12, 18]
-                    },
-                    ingresos: {
-                        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
-                        data: [8500, 9200, 10500, 12450, 11000, 9800, 13200]
-                    }
-                }
-            };
-
-            actualizarMetricas(datosEjemplo.metricas);
-            actualizarGraficos(datosEjemplo.graficos);
-        }
-
-        // Función para cerrar sesión
-        function cerrarSesion() {
-            Swal.fire({
-                title: "¿Estás seguro?",
-                text: "Se cerrará tu sesión.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#2c5aa0",
-                cancelButtonColor: "#64748b",
-                confirmButtonText: "Sí, cerrar sesión",
-                cancelButtonText: "Cancelar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Limpiar datos de sesión
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('usuarioLogueado');
-                    sessionStorage.removeItem('usuarioLogueado');
-                    
-                    // Redirigir al login
-                    window.location.href = 'login.html?logout=true';
-                }
-            });
-        }
-
-        // Función para el menú de usuario
-        function toggleUserMenu() {
-            const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado') || sessionStorage.getItem('usuarioLogueado'));
-            const nombre = usuarioLogueado?.nombre || 'Usuario';
-            const email = usuarioLogueado?.email || 'usuario@exploreworld.com';
-            const rol = usuarioLogueado?.rol || 'Usuario';
-            const iniciales = usuarioLogueado?.nombre 
-                ? usuarioLogueado.nombre.split(' ').map(n => n[0]).join('').toUpperCase()
-                : 'US';
-
-            Swal.fire({
-                title: 'Perfil de Usuario',
-                html: `
-                    <div style="text-align: left; padding: 15px 0;">
-                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #2c5aa0, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">${iniciales}</div>
-                            <div>
-                                <div style="font-weight: bold; font-size: 18px;">${nombre}</div>
-                                <div style="color: #64748B; font-size: 14px;">${rol}</div>
-                                <div style="color: #64748B; font-size: 12px;">${email}</div>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid #E2E8F0; padding-top: 15px;">
-                            <button onclick="cerrarSesion()" style="width: 100%; padding: 12px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 6px; cursor: pointer; color: #DC2626; font-weight: 600;">
-                                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Cerrar Sesión
-                            </button>
-                        </div>
-                    </div>
-                `,
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: 400
-            });
-        }
-
-        // Cargar datos cuando la página esté lista
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cargar datos del usuario
-            const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado') || sessionStorage.getItem('usuarioLogueado'));
-            
-            if (usuarioLogueado) {
-                document.getElementById('userName').textContent = usuarioLogueado.nombre || 'Usuario';
-                document.getElementById('userRole').textContent = usuarioLogueado.rol || 'Usuario';
-                
-                // Generar avatar con iniciales
-                const iniciales = usuarioLogueado.nombre 
-                    ? usuarioLogueado.nombre.split(' ').map(n => n[0]).join('').toUpperCase()
-                    : 'US';
-                document.getElementById('userAvatar').textContent = iniciales;
-            }
-
-            // Cargar datos del dashboard (solo una vez al cargar la página)
-            cargarDatosDashboard();
-
-            // Configurar búsqueda
-            document.querySelector('.search-input').addEventListener('input', function(e) {
-                const termino = e.target.value.toLowerCase();
-                console.log('Buscando:', termino);
-                // Aquí puedes agregar la lógica de búsqueda
-            });
-        });
-
-    </script>
+    <script src="js/Controllers/InicioAdmin.js"></script>
 </body>
 </html>

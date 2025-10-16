@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,37 +7,8 @@
     <link rel="stylesheet" href="css/login.css">
     <title>Login - Explorer World</title>
 </head>
-
 <body>
     <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form id="frmRegistro">
-                <h1>Crear cuenta</h1>
-                <span>Ingrese sus datos para comenzar</span>
-                
-                <div class="form-inputs">
-                    <input type="text" id="txtUsuarioRegistro" placeholder="Usuario" required>
-                    <input type="email" id="txtCorreoRegistro" placeholder="Correo electrónico" required>
-                    <input type="password" id="txtContrasenaRegistro" placeholder="Contraseña" required>
-                    <input type="text" id="txtEstadoRegistro" placeholder="Estado (Activo/Inactivo)" required>
-                    <input type="number" id="txtRangoRegistro" placeholder="ID Rango" required>
-                </div>
-                
-                <button type="submit">Crear cuenta</button>
-                
-                <div class="divider">
-                    <span>o continuar con</span>
-                </div>
-                
-                <div class="social-icons">
-                    <a href="#" class="icon" title="Google"><i class="fa-brands fa-google"></i></a>
-                    <a href="#" class="icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-            </form>
-        </div>
-
         <div class="form-container sign-in">
             <form id="frmLogin">
                 <h1>Iniciar sesión</h1>
@@ -67,34 +37,12 @@
         
         <div class="toggle-container">
             <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <div class="welcome-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h1>¡Hola!</h1>
-                    <p>Ingrese sus datos personales para utilizar todas las funciones del sitio</p>
-                    <div class="features">
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Acceso completo</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>100% Seguro</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-users"></i>
-                            <span>Comunidad activa</span>
-                        </div>
-                    </div>
-                    <button class="hidden" id="login">Iniciar Sesión</button>
-                </div>
                 <div class="toggle-panel toggle-right">
                     <div class="welcome-icon">
                         <i class="fas fa-globe-americas"></i>
                     </div>
                     <h1>Explorer World</h1>
-                    <p>Regístrese con sus datos personales para utilizar todas las funciones del sitio</p>
+                    <p>Inicia sesión para acceder a todas las funciones del sitio</p>
                     <div class="features">
                         <div class="feature">
                             <i class="fas fa-star"></i>
@@ -109,240 +57,13 @@
                             <span>Gratis para siempre</span>
                         </div>
                     </div>
-                    <button class="hidden" id="register">Crear Cuenta</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Implementación alternativa de SweetAlert2 para evitar errores -->
-    <script>
-        // Cargar SweetAlert2 de forma segura
-        function loadSweetAlert() {
-            return new Promise((resolve, reject) => {
-                if (typeof Swal !== 'undefined') {
-                    resolve(Swal);
-                    return;
-                }
-                
-                // Cargar el CSS
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css';
-                document.head.appendChild(link);
-                
-                // Cargar el JS
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js';
-                script.onload = () => resolve(window.Swal);
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
-        }
-
-        // URL del EndPoint de los usuarios - API
-        const API_URL = "http://localhost:8080/apiUsuario";
-
-        // Variables globales
-        let modalUsuarios, formUsuario, btnCerrarModal;
-        let SwalInstance = null;
-
-        // Inicializar la aplicación cuando el DOM esté cargado
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log("Inicializando aplicación de Explorer World...");
-            
-            // Cargar SweetAlert2
-            try {
-                SwalInstance = await loadSweetAlert();
-                console.log("SweetAlert2 cargado correctamente");
-            } catch (error) {
-                console.error("Error al cargar SweetAlert2:", error);
-                // Implementación de respaldo para alertas
-                window.mostrarExito = function(mensaje) { alert("Éxito: " + mensaje); };
-                window.mostrarError = function(mensaje) { alert("Error: " + mensaje); };
-                window.mostrarInfo = function(mensaje) { alert("Info: " + mensaje); };
-                SwalInstance = {
-                    fire: function(options) {
-                        alert(options.title + ": " + options.text);
-                        return Promise.resolve({ isConfirmed: true });
-                    }
-                };
-            }
-            
-            // Configurar eventos del formulario de login
-            const formLogin = document.getElementById("frmLogin");
-            const formRegistro = document.getElementById("frmRegistro");
-            
-            if (formLogin) {
-                formLogin.addEventListener("submit", function(e) {
-                    e.preventDefault();
-                    iniciarSesion();
-                });
-            }
-            
-            if (formRegistro) {
-                formRegistro.addEventListener("submit", function(e) {
-                    e.preventDefault();
-                    registrarUsuario();
-                });
-            }
-            
-            // Configurar eventos de toggle
-            const container = document.getElementById('container');
-            const registerBtn = document.getElementById('register');
-            const loginBtn = document.getElementById('login');
-
-            if (registerBtn) {
-                registerBtn.addEventListener('click', () => {
-                    container.classList.add("active");
-                });
-            }
-
-            if (loginBtn) {
-                loginBtn.addEventListener('click', () => {
-                    container.classList.remove("active");
-                });
-            }
-        });
-
-        // Función para iniciar sesión
-        async function iniciarSesion() {
-            const correo = document.getElementById("txtCorreo").value.trim();
-            const contrasena = document.getElementById("txtContrasena").value.trim();
-
-            if (!correo || !contrasena) {
-                mostrarError("Por favor, complete todos los campos.");
-                return;
-            }
-
-            try {
-                // En una implementación real, aquí se verificarían las credenciales
-                // con el backend
-                const respuesta = await fetch(`${API_URL}/consultarUsuario`);
-                if (!respuesta.ok) {
-                    throw new Error(`Error ${respuesta.status}: ${respuesta.statusText}`);
-                }
-                
-                const usuarios = await respuesta.json();
-                const usuarioValido = usuarios.find(u => u.correo === correo && u.contrasena === contrasena);
-                
-                if (usuarioValido) {
-                    mostrarExito("Inicio de sesión exitoso. Redirigiendo...");
-                    // Redirigir después de 2 segundos
-                    setTimeout(() => {
-                        window.location.href = "InicioAdmin.html";
-                    }, 2000);
-                } else {
-                    mostrarError("Credenciales incorrectas. Por favor, verifique su correo y contraseña.");
-                }
-            } catch (error) {
-                console.error("Error al iniciar sesión:", error);
-                mostrarError("Error al conectar con el servidor. Intente nuevamente.");
-            }
-        }
-
-        // Función para registrar usuario
-        async function registrarUsuario() {
-            const usuario = document.getElementById("txtUsuarioRegistro").value.trim();
-            const correo = document.getElementById("txtCorreoRegistro").value.trim();
-            const contrasena = document.getElementById("txtContrasenaRegistro").value.trim();
-            const estado = document.getElementById("txtEstadoRegistro").value.trim();
-            const idRango = document.getElementById("txtRangoRegistro").value;
-
-            if (!usuario || !correo || !contrasena || !estado || !idRango) {
-                mostrarError("Por favor, complete todos los campos.");
-                return;
-            }
-
-            // Preparar datos para enviar
-            const data = {
-                usuario: usuario,
-                correo: correo,
-                contrasena: contrasena,
-                estado: estado,
-                idRango: parseInt(idRango)
-            };
-
-            try {
-                const respuesta = await fetch(`${API_URL}/registrarUsarios`, {
-                    method: "POST",
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(data)
-                });
-
-                if (!respuesta.ok) {
-                    const errorData = await respuesta.json().catch(() => ({}));
-                    throw new Error(errorData.message || `Error ${respuesta.status}: ${respuesta.statusText}`);
-                }
-
-                mostrarExito("Usuario registrado correctamente.");
-                document.getElementById("frmRegistro").reset();
-                // Cambiar a la vista de login
-                document.getElementById('container').classList.remove("active");
-            } catch (error) {
-                console.error("Error al registrar usuario:", error);
-                mostrarError(error.message || "Error al registrar el usuario.");
-            }
-        }
-
-        // Funciones CRUD para usuarios (similar al de empleados)
-        async function obtenerUsuarios() {
-            try {
-                const respuesta = await fetch(`${API_URL}/consultarUsuario`);
-                if (!respuesta.ok) {
-                    throw new Error(`Error ${respuesta.status}: ${respuesta.statusText}`);
-                }
-                
-                return await respuesta.json();
-            } catch (error) {
-                console.error("Error al obtener usuarios:", error);
-                mostrarError("No se pudieron cargar los usuarios.");
-                return [];
-            }
-        }
-
-        // Mostrar mensajes de alerta
-        function mostrarExito(mensaje) {
-            if (SwalInstance && typeof SwalInstance.fire === 'function') {
-                SwalInstance.fire({
-                    title: "Éxito",
-                    text: mensaje,
-                    icon: "success",
-                    customClass: 'swal-custom'
-                });
-            } else {
-                alert("Éxito: " + mensaje);
-            }
-        }
-
-        function mostrarError(mensaje) {
-            if (SwalInstance && typeof SwalInstance.fire === 'function') {
-                SwalInstance.fire({
-                    title: "Error",
-                    text: mensaje,
-                    icon: "error",
-                    customClass: 'swal-custom'
-                });
-            } else {
-                alert("Error: " + mensaje);
-            }
-        }
-
-        function mostrarInfo(mensaje) {
-            if (SwalInstance && typeof SwalInstance.fire === 'function') {
-                SwalInstance.fire({
-                    title: "Información",
-                    text: mensaje,
-                    icon: "info",
-                    customClass: 'swal-custom'
-                });
-            } else {
-                alert("Información: " + mensaje);
-            }
-        }
-    </script>
-
-    <script src="js/Controllers/Usuario.js"></script>
+    <script src="js/Controllers/login.js"></script>
 </body>
-
 </html>

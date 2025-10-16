@@ -1,241 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/FacturaAdmin.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Gestión de Facturas - Explore World</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Servicios -- Explore World</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluir jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="CSS/FacturaAdmin.css">
 </head>
 
 <body>
-    <div id="contenedor-app">
-        <div id="menu-lateral" class="menu-lateral">
-            <div class="titulo-menu">
-                <img src="img/Logo.png" class="TamañoImagen">
-                <span class="material-symbols-outlined">Explore world</span>
+    <!-- Sidebar desplegable -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
             </div>
-
-            <a href="index.html">
-                <span class="material-symbols-outlined"><img src="img/home.png" alt=""></span>
-                <span class="texto-menu">Inicio</span>
-            </a>
-            <a href="viajes.html">
-                <span class="material-symbols-outlined"><img src="img/Viajes.png" alt=""></span>
-                <span class="texto-menu">Viajes</span>
-            </a>
-            <a href="empleados.html">
-                <span class="material-symbols-outlined"><img src="img/Empleado.png" alt=""></span>
-                <span class="texto-menu">Empleados</span>
-            </a>
-            <a href="destinos.html">
-                <span class="material-symbols-outlined"><img src="img/Destino.png" alt=""></span>
-                <span class="texto-menu">Destinos</span>
-            </a>
-            <a href="factura.html">
-                <span class="material-symbols-outlined"><img src="img/Factura.png" alt=""></span>
-                <span class="texto-menu">Factura</span>
-            </a>
-            <a href="reservaciones.html">
-                <span class="material-symbols-outlined"><img src="img/Reservacion.png" alt=""></span>
-                <span class="texto-menu">Reservaciones</span>
-            </a>
-            <a href="servicios.html">
-                <span class="material-symbols-outlined"><img src="img/servicios.png" alt=""></span>
-                <span class="texto-menu">Servicios</span>
-            </a>
-            <a href="login.html" id="btnCerrarSecion">
-                <span class="material-symbols-outlined"><img src="img/user-logout (5).png" alt=""></span>
-                <span class="texto-menu">Cerrar Sesión</span>
-            </a>
+            <div class="logo-text">Explore World</div>
         </div>
+        <ul class="menu">
+            <li onclick="window.location.href='InicioAdmin.html'">
+                <i class="fas fa-home"></i>
+                <span class="menu-text">Inicio</span>
+            </li>
+            <li onclick="window.location.href='ViajesAdmin.html'">
+                <i class="fas fa-route"></i>
+                <span class="menu-text">Viajes</span>
+            </li>
+            <li onclick="window.location.href='EmpleadoAdmin.html'">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Empleados</span>
+            </li>
+            <li onclick="window.location.href='DestinosAdmin.html'">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="menu-text">Destinos</span>
+            </li>
+            <li class="active" onclick="window.location.href='FacturaAdmin.html'">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="menu-text">Factura</span>
+            </li>
+            <li onclick="window.location.href='ReservacionesAdmin.html'">
+                <i class="fas fa-calendar-check"></i>
+                <span class="menu-text">Reservaciones</span>
+            </li>
+            <li class="btn-logout" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">Cerrar Sesión</span>
+            </li>
+        </ul>
     </div>
-    <div class="max-w-6xl mx-auto">
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-blue-800">Explore World</h1>
-            <p class="text-gray-600">Sistema de Facturación de Viajes</p>
-        </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Formulario para añadir/editar viajes -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4 text-blue-800">Gestión de Viajes</h2>
-                <form id="travelForm" class="space-y-4">
-                    <input type="hidden" id="travelId">
-
-                    <div>
-                        <label for="customerId" class="block text-sm font-medium text-gray-700 required">ID del
-                            Cliente</label>
-                        <input type="text" id="customerId" name="customerId"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                        <p class="error-message" id="customerIdError">Este campo es obligatorio</p>
-                    </div>
-
-                    <div>
-                        <label for="hotelId" class="block text-sm font-medium text-gray-700 required">ID del
-                            Hotel</label>
-                        <input type="number" id="hotelId" name="hotelId" min="1"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                        <p class="error-message" id="hotelIdError">Debe ser un número mayor o igual a 1</p>
-                    </div>
-
-                    <div>
-                        <label for="destination" class="block text-sm font-medium text-gray-700 required">Destino (El
-                            Salvador)</label>
-                        <select id="destination" name="destination"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                            <option value="" disabled selected>Seleccione un destino</option>
-                            <option value="San Salvador">San Salvador</option>
-                            <option value="Santa Ana">Santa Ana</option>
-                            <option value="San Miguel">San Miguel</option>
-                            <option value="La Libertad">La Libertad</option>
-                            <option value="Sonsonate">Sonsonate</option>
-                            <option value="Usulután">Usulután</option>
-                            <option value="Ahuachapán">Ahuachapán</option>
-                            <option value="Cuscatlán">Cuscatlán</option>
-                            <option value="Morazán">Morazán</option>
-                            <option value="Chalatenango">Chalatenango</option>
-                        </select>
-                        <p class="error-message" id="destinationError">Seleccione un destino</p>
-                    </div>
-
-                    <div>
-                        <label for="tripType" class="block text-sm font-medium text-gray-700 required">Tipo de
-                            Viaje</label>
-                        <select id="tripType" name="tripType"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                            <option value="" disabled selected>Seleccione tipo de viaje</option>
-                            <option value="Negocios">Negocios</option>
-                            <option value="Playa">Playa</option>
-                            <option value="Aventura">Aventura</option>
-                            <option value="Cultural">Cultural</option>
-                        </select>
-                        <p class="error-message" id="tripTypeError">Seleccione un tipo de viaje</p>
-                    </div>
-
-                    <div>
-                        <label for="duration" class="block text-sm font-medium text-gray-700 required">Duración
-                            (días)</label>
-                        <input type="number" id="duration" name="duration" min="1"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                        <p class="error-message" id="durationError">Debe ser al menos 1 día</p>
-                    </div>
-
-                    <div>
-                        <label for="total" class="block text-sm font-medium text-gray-700 required">Total ($)</label>
-                        <input type="number" id="total" name="total" min="1" step="0.01"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                            required>
-                        <p class="error-message" id="totalError">El total debe ser mayor a 0</p>
-                    </div>
-
-                    <div class="flex space-x-4 pt-2">
-                        <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Guardar Viaje
-                        </button>
-                        <button type="button" id="resetButton"
-                            class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            Limpiar
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Lista de viajes del cliente -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4 text-blue-800">Viajes del Cliente</h2>
-                <div class="mb-4">
-                    <label for="searchCustomerId" class="block text-sm font-medium text-gray-700 mb-1">Buscar por ID de
-                        Cliente</label>
-                    <div class="flex">
-                        <input type="text" id="searchCustomerId"
-                            class="flex-grow rounded-l-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        <button id="searchButton"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Buscar
-                        </button>
-                    </div>
+    <div class="main-content">
+        <!-- Navbar superior -->
+        <nav class="navbar">
+            <h1 class="navbar-title">GESTIÓN DE FACTURAS</h1>
+            <div class="navbar-right">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar facturas..." id="searchFacturas">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
-
-                <div id="customerTravels" class="overflow-auto max-h-96">
-                    <!-- Los viajes se cargarán aquí -->
-                    <p class="text-gray-500 italic">Ingrese un ID de cliente para ver sus viajes.</p>
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Admin User</div>
+                        <div class="user-role" id="userRole">Administrador</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </nav>
 
-        <!-- Sección para ver factura -->
-        <div class="mt-8">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800">Factura</h2>
-                <button id="generateInvoiceBtn"
-                    class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-300"
-                    disabled>
-                    Generar Factura
-                </button>
-            </div>
+        <div class="dashboard-content">
+            <div class="max-w-6xl mx-auto">
+                <header class="mb-8 text-center">
+                    <h1 class="text-3xl font-bold text-blue-800">Explore World</h1>
+                    <p class="text-gray-600">Sistema de Facturación</p>
+                </header>
 
-            <div id="invoiceContainer" class="invoice-container p-6 bg-white hidden">
-                <div class="text-right mb-6">
-                    <p class="text-xl font-bold">EXPLORE WORLD</p>
-                    <p class="text-sm text-gray-600">Factura #<span id="invoiceNumber">00001</span></p>
-                    <p class="text-sm text-gray-600"><span id="invoiceDate">01/01/2023</span></p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Formulario para añadir/editar facturas -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-semibold mb-4 text-blue-800">Gestión de Facturas</h2>
+                        <form id="facturaForm" class="space-y-4">
+                            <input type="hidden" id="facturaId">
+
+                            <div>
+                                <label for="idReservacion" class="block text-sm font-medium text-gray-700 required">ID de Reservación</label>
+                                <input type="number" id="idReservacion" name="idReservacion" min="1"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                <p class="error-message" id="idReservacionError">Este campo es obligatorio</p>
+                            </div>
+
+                            <div>
+                                <label for="fechaPago" class="block text-sm font-medium text-gray-700 required">Fecha de Pago</label>
+                                <input type="date" id="fechaPago" name="fechaPago"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                <p class="error-message" id="fechaPagoError">Seleccione una fecha</p>
+                            </div>
+
+                            <div>
+                                <label for="metodoPago" class="block text-sm font-medium text-gray-700 required">Método de Pago</label>
+                                <select id="metodoPago" name="metodoPago"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                    <option value="" disabled selected>Seleccione método de pago</option>
+                                    <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                                    <option value="Tarjeta de Débito">Tarjeta de Débito</option>
+                                    <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="PayPal">PayPal</option>
+                                </select>
+                                <p class="error-message" id="metodoPagoError">Seleccione un método de pago</p>
+                            </div>
+
+                            <div>
+                                <label for="montoTotal" class="block text-sm font-medium text-gray-700 required">Monto Total ($)</label>
+                                <input type="number" id="montoTotal" name="montoTotal" min="0.01" step="0.01"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                <p class="error-message" id="montoTotalError">El monto debe ser mayor a 0</p>
+                            </div>
+
+                            <div class="flex space-x-4 pt-2">
+                                <button type="submit"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    Guardar Factura
+                                </button>
+                                <button type="button" id="resetButton"
+                                    class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                    Limpiar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Lista de facturas -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-semibold mb-4 text-blue-800">Facturas Registradas</h2>
+                        <div class="mb-4">
+                            <label for="searchFacturasList" class="block text-sm font-medium text-gray-700 mb-1">Buscar Facturas</label>
+                            <div class="flex">
+                                <input type="text" id="searchFacturasList" placeholder="Buscar por ID, reservación o método..."
+                                    class="flex-grow rounded-l-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                <button id="searchFacturasButton"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    Buscar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="facturasList" class="overflow-auto max-h-96">
+                            <!-- Las facturas se cargarán aquí -->
+                            <p class="text-gray-500 italic">Cargando facturas...</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div>
-                        <h3 class="font-semibold mb-2">Cliente:</h3>
-                        <p id="invoiceCustomerId">ID: </p>
-                        <p id="invoiceCustomerName">Nombre: </p>
+                <!-- Sección para ver factura detallada -->
+                <div class="mt-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-blue-800">Vista Previa de Factura</h2>
+                        <button id="generateInvoiceBtn"
+                            class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-300"
+                            disabled>
+                            <i class="fas fa-download mr-2"></i>Descargar PDF
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="font-semibold mb-2">Detalles de Pago:</h3>
-                        <p>Método: Transferencia Bancaria</p>
-                        <p>Estado: <span class="font-semibold text-green-600">Pagado</span></p>
+
+                    <div id="invoiceContainer" class="invoice-container p-6 bg-white">
+                        <div class="text-right mb-6">
+                            <p class="text-xl font-bold">EXPLORE WORLD</p>
+                            <p class="text-sm text-gray-600">Factura #<span id="invoiceNumber">00001</span></p>
+                            <p class="text-sm text-gray-600"><span id="invoiceDate">01/01/2023</span></p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <h3 class="font-semibold mb-2">Cliente:</h3>
+                                <p id="invoiceCustomerId">ID Reservación: </p>
+                                <p id="invoiceCustomerName">Nombre: Cliente</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-2">Detalles de Pago:</h3>
+                                <p id="invoiceMetodoPago">Método: </p>
+                                <p>Estado: <span class="font-semibold text-green-600">Pagado</span></p>
+                                <p id="invoiceFechaPago">Fecha: </p>
+                            </div>
+                        </div>
+
+                        <table class="invoice-table mb-6">
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPCIÓN</th>
+                                    <th>CANTIDAD</th>
+                                    <th>PRECIO UNITARIO</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceItems">
+                                <tr>
+                                    <td>Servicio de Viaje - Reservación <span id="invoiceReservacionId"></span></td>
+                                    <td>1</td>
+                                    <td id="invoicePrecioUnitario">$0.00</td>
+                                    <td id="invoiceTotalItem">$0.00</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right font-semibold">Total:</td>
+                                    <td id="invoiceTotal" class="font-semibold">$0.00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="text-center pt-4 border-t border-gray-200">
+                            <p class="text-sm text-gray-600">¡Gracias por su preferencia!</p>
+                            <p class="text-sm text-gray-600">Explore World - Viaje con nosotros</p>
+                        </div>
                     </div>
-                </div>
-
-                <table class="invoice-table mb-6">
-                    <thead>
-                        <tr>
-                            <th>FECHA</th>
-                            <th>DESTINO</th>
-                            <th>TIPO</th>
-                            <th>HOTEL ID</th>
-                            <th>DÍAS</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody id="invoiceItems">
-                        <!-- Items de factura se cargarán aquí -->
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="4" class="text-right font-semibold">Total:</td>
-                            <td id="invoiceTotal" class="font-semibold">$0.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-                <div class="text-center pt-4 border-t border-gray-200">
-                    <p class="text-sm text-gray-600">¡Gracias por su preferencia!</p>
-                    <p class="text-sm text-gray-600">Explore World - Viaje con nosotros</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/factura.js"></script>
+    <script src="js/Controllers/FacturaAdmin.js"></script>
 </body>
-
 </html>
